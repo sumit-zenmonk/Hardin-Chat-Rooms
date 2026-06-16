@@ -26,6 +26,8 @@ export interface CreateRoomPayload {
 export interface RoomState {
     myrooms: Room[] | [];
     myRoomsTotalDocuments: number;
+    publicRooms: Room[] | [];
+    publicRoomsTotalDocuments: number;
     loading: boolean;
     error: string | null;
 }

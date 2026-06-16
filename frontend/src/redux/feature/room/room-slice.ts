@@ -1,12 +1,14 @@
 "use client";
 
 import { createSlice } from "@reduxjs/toolkit";
-import { createRoom, getMyRooms } from "./room-action";
+import { createRoom, getMyRooms, getPublicRooms } from "./room-action";
 import { RoomState } from "./room-type";
 
 const initialState: RoomState = {
     myrooms: [],
     myRoomsTotalDocuments: 0,
+    publicRooms: [],
+    publicRoomsTotalDocuments: 0,
     loading: false,
     error: null,
 };
@@ -42,6 +44,19 @@ const roomSlice = createSlice({
                 state.error = null;
             })
             .addCase(getMyRooms.rejected, (state, action) => {
+                state.loading = false;
+                state.error = action.payload as string;
+            })
+            .addCase(getPublicRooms.pending, (state) => {
+                state.loading = true;
+            })
+            .addCase(getPublicRooms.fulfilled, (state, action) => {
+                state.loading = false;
+                state.publicRooms = action.payload.data;
+                state.publicRoomsTotalDocuments = action.payload.totalDocuments;
+                state.error = null;
+            })
+            .addCase(getPublicRooms.rejected, (state, action) => {
                 state.loading = false;
                 state.error = action.payload as string;
             })
