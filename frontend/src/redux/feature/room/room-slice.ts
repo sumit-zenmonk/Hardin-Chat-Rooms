@@ -15,9 +15,7 @@ const roomSlice = createSlice({
     initialState,
     reducers: {
         resetRoomError: (state) => {
-            state.error = null;
-            state.loading = false,
-                state.myroom = []
+            state = initialState
         },
     },
     extraReducers: (builder) => {

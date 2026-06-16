@@ -7,7 +7,7 @@ import { CreateRoomPayload } from "./room-type";
 const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL;
 
 export const createRoom = createAsyncThunk<
-    any,
+    void,
     CreateRoomPayload,
     { state: RootState }
 >(
