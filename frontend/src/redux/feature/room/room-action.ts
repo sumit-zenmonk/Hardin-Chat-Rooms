@@ -11,7 +11,7 @@ export const createRoom = createAsyncThunk<
     CreateRoomPayload,
     { state: RootState }
 >(
-    "wallet/add-amount",
+    "room/post",
     async (payload, { getState, rejectWithValue }) => {
         try {
             const token = getState().authReducer.token || "";
