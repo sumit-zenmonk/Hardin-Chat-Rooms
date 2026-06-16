@@ -1,9 +1,21 @@
 export interface Room {
     uuid: string;
-    customer_uuid: string;
-    balance: number;
-    created_at: string;
-    updated_at: string;
+    name: string;
+    description: string;
+    creator_uuid: string;
+    creator: User;
+    created_at: Date,
+    updated_at: Date,
+    deleted_at: Date,
+}
+
+export interface User {
+    uuid: string;
+    name: string;
+    email: string;
+    created_at: Date,
+    updated_at: Date,
+    deleted_at: Date,
 }
 
 export interface CreateRoomPayload {
@@ -12,7 +24,8 @@ export interface CreateRoomPayload {
 }
 
 export interface RoomState {
-    myroom: Room | [];
+    myrooms: Room[] | [];
+    myRoomsTotalDocuments: number;
     loading: boolean;
     error: string | null;
 }

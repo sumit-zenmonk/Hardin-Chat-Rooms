@@ -6,6 +6,7 @@ import storage from "redux-persist/lib/storage";
 
 //common reducer
 import authReducer from "../feature/auth/auth-slice";
+import roomReducer from "../feature/room/room-slice";
 
 const persistConfig = {
     key: "root",
@@ -14,6 +15,7 @@ const persistConfig = {
 
 const appReducer = combineReducers({
     authReducer: authReducer,
+    roomReducer:roomReducer,
 });
 
 const rootReducer = (state: any, action: any) => {

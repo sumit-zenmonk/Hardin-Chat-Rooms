@@ -7,7 +7,11 @@ export class DeleteRoomController {
     constructor(private readonly deleteRoomService: DeleteRoomService) { }
 
     @Delete('/:uuid')
-    async deleteComment(@Req() req: Request, @Param('uuid') uuid: string) {
-        return await this.deleteRoomService.handle(req, uuid);
+    async deleteRoom(@Req() req: Request, @Param('uuid') uuid: string) {
+        await this.deleteRoomService.handle(req, uuid);
+
+        return {
+            message: "Room Deleted Success"
+        }
     }
 }
