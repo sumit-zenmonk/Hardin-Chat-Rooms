@@ -1,9 +1,6 @@
 "use client"
 
 import './globals.css'
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
-import Script from 'next/script';
 
 import { Provider } from "react-redux";
 import { persistor, store } from "@/redux/store";
@@ -29,7 +26,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             </PersistGate>
           </Provider>
         </StyledEngineProvider>
-        <Script src="https://checkout.razorpay.com/v1/checkout.js" strategy="lazyOnload" />
       </body>
     </html>
   );
