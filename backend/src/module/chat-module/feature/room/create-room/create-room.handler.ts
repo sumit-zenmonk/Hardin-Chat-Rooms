@@ -11,7 +11,6 @@ export class CreateRoomService {
 
     async handle(req: Request, body: CreateRoomDto) {
         const isRoomWithSameNameExists = await this.repository.findByCreatorUuidAndName(req.user.uuid, body.name);
-        console.log(isRoomWithSameNameExists);
         if (isRoomWithSameNameExists) {
             throw new BadRequestException("Room With Same Name Exists");
         }

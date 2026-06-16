@@ -16,7 +16,7 @@ export class GetPublicRoomListingController {
             limit: curr_limit,
             offset: curr_offset,
             totalDocuments: totalDocuments,
-            message: "Room Listing Success"
+            message: "Public Room Listing Success"
         }
     }
 }

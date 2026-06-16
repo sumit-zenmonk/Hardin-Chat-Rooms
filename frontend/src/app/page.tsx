@@ -26,7 +26,7 @@ export default function Home() {
       console.log(error);
     }
   };
-
+console.log(publicRooms?.length , publicRoomsTotalDocuments,publicRooms);
   return (
     <Container maxWidth="xl" className={styles.container}>
       <Box className={styles.header}>

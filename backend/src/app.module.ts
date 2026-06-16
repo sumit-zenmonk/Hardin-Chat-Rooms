@@ -22,6 +22,7 @@ import { UserModule } from './module/auth-module/feature/user/user.module';
 import { ChatRabbitMQModule } from './module/chat-module/infrastructure/rabbit-mq/rabbit-mq.module';
 import { chatDataSource } from './module/chat-module/infrastructure/database/data-source';
 import { RoomModule } from './module/chat-module/feature/room/room.module';
+import { RoomMemberModule } from './module/chat-module/feature/room-member/room.module';
 
 @Module({
   imports: [
@@ -72,6 +73,7 @@ import { RoomModule } from './module/chat-module/feature/room/room.module';
         ),
     }),
     RoomModule,
+    RoomMemberModule,
   ],
   controllers: [AppController],
   providers: [AppService, UserRepository, JwtHelperService],

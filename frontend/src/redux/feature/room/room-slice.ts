@@ -39,7 +39,9 @@ const roomSlice = createSlice({
             })
             .addCase(getMyRooms.fulfilled, (state, action) => {
                 state.loading = false;
-                state.myrooms = action.payload.data;
+                // if (action.meta.arg.offset == 0) {
+                    state.myrooms = action.payload.data;
+                // }
                 state.myRoomsTotalDocuments = action.payload.totalDocuments;
                 state.error = null;
             })
@@ -52,7 +54,9 @@ const roomSlice = createSlice({
             })
             .addCase(getPublicRooms.fulfilled, (state, action) => {
                 state.loading = false;
-                state.publicRooms = action.payload.data;
+                // if (action.meta.arg.offset == 0) {
+                    state.publicRooms = action.payload.data;
+                // }
                 state.publicRoomsTotalDocuments = action.payload.totalDocuments;
                 state.error = null;
             })
