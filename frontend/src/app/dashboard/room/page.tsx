@@ -16,14 +16,22 @@ export default function Room() {
     const dispatch = useAppDispatch();
     const { myrooms, myRoomsTotalDocuments } = useAppSelector((state: RootState) => state.roomReducer);
     const [openCreateRoomModal, setOpenCreateRoomModal] = useState(false);
+    const [offset, setOffset] = useState(Number(process.env.NEXT_PUBLIC_PAGE_OFFSET) || 0);
+    const limit = Number(process.env.NEXT_PUBLIC_PAGE_LIMIT) || 10;
 
     useEffect(() => {
-        fetchRooms();
+        if (!fetchRooms.length) {
+            fetchRooms();
+        }
     }, []);
 
     const fetchRooms = async () => {
         try {
-            const data = await dispatch(getMyRooms({})).unwrap();
+            if (myrooms.length >= myRoomsTotalDocuments) return;
+
+            const newOffset = offset + limit;
+            setOffset(newOffset);
+            await dispatch(getMyRooms({ limit, offset: newOffset, })).unwrap();
         } catch (error: any) {
             enqueueSnackbar(error, { variant: "error" });
             console.log(error);

@@ -15,14 +15,22 @@ export default function Home() {
   const dispatch = useAppDispatch();
   const { publicRooms, publicRoomsTotalDocuments } = useAppSelector((state: RootState) => state.roomReducer);
   const { user } = useAppSelector((state: RootState) => state.authReducer);
+  const [offset, setOffset] = useState(Number(process.env.NEXT_PUBLIC_PAGE_OFFSET) || 0);
+  const limit = Number(process.env.NEXT_PUBLIC_PAGE_LIMIT) || 10;
 
   useEffect(() => {
-    fetchRooms();
+    if (!fetchRooms.length) {
+      fetchRooms();
+    }
   }, []);
 
   const fetchRooms = async () => {
     try {
-      await dispatch(getPublicRooms({})).unwrap();
+      if (publicRooms.length >= publicRoomsTotalDocuments) return;
+
+      const newOffset = offset + limit;
+      setOffset(newOffset);
+      await dispatch(getPublicRooms({ limit, offset: newOffset, })).unwrap();
     } catch (error: any) {
       enqueueSnackbar(error, { variant: "error" });
       console.log(error);

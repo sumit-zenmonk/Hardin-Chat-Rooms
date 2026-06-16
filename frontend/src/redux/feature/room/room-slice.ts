@@ -41,9 +41,17 @@ const roomSlice = createSlice({
             })
             .addCase(getMyRooms.fulfilled, (state, action) => {
                 state.loading = false;
-                // if (action.meta.arg.offset == 0) {
-                state.myrooms = action.payload.data;
-                // }
+
+                if (action.payload.offset === 0) {
+                    state.myrooms = action.payload.data;
+                } else {
+                    const mergedRooms = [
+                        ...state.myrooms,
+                        ...action.payload.data,
+                    ];
+                    state.myrooms = Array.from(new Map(mergedRooms.map((room) => [room.uuid, room])).values());
+                }
+
                 state.myRoomsTotalDocuments = action.payload.totalDocuments;
                 state.error = null;
             })
@@ -56,9 +64,17 @@ const roomSlice = createSlice({
             })
             .addCase(getPublicRooms.fulfilled, (state, action) => {
                 state.loading = false;
-                // if (action.meta.arg.offset == 0) {
-                state.publicRooms = action.payload.data;
-                // }
+
+                if (action.payload.offset === 0) {
+                    state.publicRooms = action.payload.data;
+                } else {
+                    const mergedRooms = [
+                        ...state.publicRooms,
+                        ...action.payload.data,
+                    ];
+                    state.publicRooms = Array.from(new Map(mergedRooms.map((room) => [room.uuid, room])).values());
+                }
+
                 state.publicRoomsTotalDocuments = action.payload.totalDocuments;
                 state.error = null;
             })

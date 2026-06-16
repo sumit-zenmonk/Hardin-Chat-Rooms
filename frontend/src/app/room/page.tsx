@@ -15,14 +15,22 @@ import { deleteRoomMember } from "@/redux/feature/member/member-action";
 export default function Room() {
     const dispatch = useAppDispatch();
     const { joinedRooms, joinedRoomsTotalDocuments } = useAppSelector((state: RootState) => state.roomReducer);
+    const [offset, setOffset] = useState(Number(process.env.NEXT_PUBLIC_PAGE_OFFSET) || 0);
+    const limit = Number(process.env.NEXT_PUBLIC_PAGE_LIMIT) || 10;
 
     useEffect(() => {
-        fetchRooms();
+        if (!fetchRooms.length) {
+            fetchRooms();
+        }
     }, []);
 
     const fetchRooms = async () => {
         try {
-            await dispatch(getJoinedRooms({})).unwrap();
+            if (joinedRooms.length >= joinedRoomsTotalDocuments) return;
+
+            const newOffset = offset + limit;
+            setOffset(newOffset);
+            await dispatch(getJoinedRooms({ limit, offset: newOffset, })).unwrap();
         } catch (error: any) {
             enqueueSnackbar(error, { variant: "error" });
             console.log(error);
