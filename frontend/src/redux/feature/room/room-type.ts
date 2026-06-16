@@ -28,6 +28,8 @@ export interface RoomState {
     myRoomsTotalDocuments: number;
     publicRooms: Room[] | [];
     publicRoomsTotalDocuments: number;
+    joinedRooms: Room[] | [];
+    joinedRoomsTotalDocuments: number;
     loading: boolean;
     error: string | null;
 }

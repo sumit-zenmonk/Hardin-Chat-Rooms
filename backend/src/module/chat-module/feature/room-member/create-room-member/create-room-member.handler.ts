@@ -13,7 +13,7 @@ export class CreateRoomMemberService {
 
     async handle(req: Request, body: CreateRoomMemberDto) {
         const isRoomExists = await this.roomRepository.findByUuid(body.room_uuid);
-        if (isRoomExists) {
+        if (!isRoomExists) {
             throw new BadRequestException("Room Not Found");
         }
 

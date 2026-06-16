@@ -35,7 +35,7 @@ export default function HeaderComp() {
                         router.push("/")
                     }}
                 >
-                    Room
+                   Public Room
                 </Button>
 
                 {user ? (
@@ -50,10 +50,18 @@ export default function HeaderComp() {
 
                         <Button
                             onClick={() => {
+                                router.push("/dashboard/room")
+                            }}
+                        >
+                            Your Rooms
+                        </Button>
+
+                        <Button
+                            onClick={() => {
                                 router.push("/room")
                             }}
                         >
-                            Room
+                            Joined Rooms
                         </Button>
 
                         <Button

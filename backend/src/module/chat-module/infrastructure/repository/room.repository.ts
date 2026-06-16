@@ -74,6 +74,24 @@ export class RoomRepository extends Repository<RoomEntity> {
         return { data, total };
     }
 
+    async getRoomJoinedListing(user: Partial<UserEntity>, offset?: number, limit?: number) {
+        const [data, total] = await this.findAndCount({
+            where: {
+                members: { user_uuid: user.uuid }
+            },
+            relations: {
+                creator: true,
+            },
+            order: {
+                created_at: 'DESC'
+            },
+            skip: offset || Number(process.env.page_offset) || 0,
+            take: limit || Number(process.env.page_limit) || 10
+        });
+
+        return { data, total };
+    }
+
     async getPublicRoomListing(offset?: number, limit?: number) {
         const [data, total] = await this.findAndCount({
             relations: {

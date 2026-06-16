@@ -116,6 +116,45 @@ export const getPublicRooms = createAsyncThunk<
     }
 );
 
+export const getJoinedRooms = createAsyncThunk<
+    { data: Room[], totalDocuments: number, message: string, limit: number, offset: number },
+    { limit?: number; offset?: number },
+    { state: RootState }
+>(
+    "room/joined",
+    async (
+        {
+            limit = LIMIT,
+            offset = OFFSET,
+        },
+        { getState, rejectWithValue }
+    ) => {
+        try {
+            const token = getState().authReducer.token || "";
+
+            const res = await fetch(
+                `${BACKEND_URL}/api/v1/room/join?limit=${limit}&offset=${offset}`,
+                {
+                    method: "GET",
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: token,
+                    },
+                }
+            );
+
+            const result = await res.json();
+            if (!res.ok) {
+                throw new Error(result.message);
+            }
+
+            return result;
+        } catch (error: any) {
+            return rejectWithValue(error.message);
+        }
+    }
+);
+
 export const deleteRoom = createAsyncThunk<
     { message: string; uuid: string },
     { uuid: string },
@@ -123,6 +162,7 @@ export const deleteRoom = createAsyncThunk<
 >("delete/room", async (payload, { getState, rejectWithValue }) => {
     try {
         const token = getState().authReducer.token || "";
+
         const res = await fetch(`${BACKEND_URL}/api/v1/room/${payload.uuid}`, {
             method: "DELETE",
             headers: {

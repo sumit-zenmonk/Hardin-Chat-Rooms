@@ -9,6 +9,7 @@ import { getPublicRooms } from "@/redux/feature/room/room-action";
 import { RootState } from "@/redux/store";
 import InfiniteScroll from "react-infinite-scroll-component";
 import type { Room } from "@/redux/feature/room/room-type";
+import { createRoomMember } from "@/redux/feature/member/member-action";
 
 export default function Home() {
   const dispatch = useAppDispatch();
@@ -26,7 +27,16 @@ export default function Home() {
       console.log(error);
     }
   };
-console.log(publicRooms?.length , publicRoomsTotalDocuments,publicRooms);
+
+  const handleJoin = async (uuid: string) => {
+    try {
+      await dispatch(createRoomMember({ room_uuid: uuid })).unwrap();
+    } catch (error: any) {
+      enqueueSnackbar(error, { variant: "error" });
+      console.log(error);
+    }
+  };
+
   return (
     <Container maxWidth="xl" className={styles.container}>
       <Box className={styles.header}>
@@ -60,6 +70,12 @@ console.log(publicRooms?.length , publicRoomsTotalDocuments,publicRooms);
                     <Typography className={styles.roomName}>{room.name}</Typography>
                     <Typography className={styles.description}>{room.description}</Typography>
                   </CardContent>
+
+                  <Button
+                    onClick={() => handleJoin(room.uuid)}
+                  >
+                    Join
+                  </Button>
                 </Card>
               );
             })}

@@ -11,7 +11,7 @@ export class DeleteRoomMemberController {
         await this.deleteRoomMemberService.handle(req, uuid);
 
         return {
-            message: "Room Deleted Success"
+            message: "Room Member Deleted Success"
         }
     }
 }

@@ -9,7 +9,7 @@ export class DeleteRoomMemberService {
     ) { }
 
     async handle(req: Request, uuid: string) {
-        const isRoomMemberExists = await this.roomMemberRepository.findByUuid(uuid);
+        const isRoomMemberExists = await this.roomMemberRepository.findByUserUuidAndRoomUuid(req.user.uuid,uuid);
         if (!isRoomMemberExists) {
             throw new BadRequestException("Member Not Found");
         }
@@ -18,7 +18,7 @@ export class DeleteRoomMemberService {
             throw new BadRequestException("Not Allowed to remove other member");
         }
 
-        await this.roomMemberRepository.deleteRoomMember(uuid);
+        await this.roomMemberRepository.deleteRoomMember(isRoomMemberExists.uuid);
         return;
     }
 }
