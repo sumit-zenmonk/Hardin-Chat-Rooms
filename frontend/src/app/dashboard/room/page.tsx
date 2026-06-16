@@ -21,7 +21,7 @@ export default function Room() {
 
     useEffect(() => {
         if (!fetchRooms.length) {
-            fetchRooms();
+            dispatch(getMyRooms({ limit, offset: 0, })).unwrap();
         }
     }, []);
 

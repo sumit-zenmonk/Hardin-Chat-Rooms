@@ -20,7 +20,7 @@ export default function Room() {
 
     useEffect(() => {
         if (!fetchRooms.length) {
-            fetchRooms();
+            dispatch(getJoinedRooms({ limit, offset: 0, })).unwrap();
         }
     }, []);
 

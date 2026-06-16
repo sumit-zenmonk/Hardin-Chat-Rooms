@@ -20,7 +20,7 @@ export default function Home() {
 
   useEffect(() => {
     if (!fetchRooms.length) {
-      fetchRooms();
+       dispatch(getPublicRooms({ limit, offset: 0, })).unwrap();
     }
   }, []);
 
