@@ -1,0 +1,73 @@
+@import "tailwindcss";
+
+* {
+  /* scrollbar-width: none; */
+  scroll-behavior: smooth;
+  transition: all ease .5s;
+}
+
+body {
+  width: 100vw;
+  height: 100vh;
+  font-weight: 900;
+  user-select: none;
+  overflow: hidden;
+  background-color: #faf7f7;
+}
+
+.birdAnimation {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 8%;
+}
+
+.MuiButtonBase-root {
+  text-transform: none;
+}
+
+p {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  word-break: break-all;
+}
+
+button,
+.MuiButtonBase-root {
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  font-weight: 800;
+  color: rgb(0, 81, 104);
+  background: rgba(250, 250, 250, 0.465);
+  border: 1px solid rgb(180, 180, 180);
+  border-radius: 16px;
+  cursor: pointer;
+  /* box-shadow:  0 0 0 5px rgba(0, 0, 0, 0.08); */
+  transition: box-shadow ease-in-out 0.2s;
+}
+
+button:hover {
+  background: rgb(0, 100, 128);
+  box-shadow: 0 0 0 2px rgb(194, 194, 194);
+  color: #fff;
+  transform: scale(1.05);
+}
+
+button:disabled {
+  background-color: #e2e2e2;
+  cursor: not-allowed;
+}
+
+.slick-prev:before,
+.slick-next:before {
+  font-family: 'slick';
+  font-size: 20px;
+  line-height: 1;
+
+  opacity: 1000;
+  background: #000000;
+  color: rgb(255, 255, 255);
+  border-radius: 20px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}

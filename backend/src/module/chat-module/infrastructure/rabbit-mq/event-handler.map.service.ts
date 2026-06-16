@@ -1,0 +1,46 @@
+import { Injectable, Logger } from '@nestjs/common';
+import { ChatEventHandlerMap, UserRegisteredMQEventPayload } from './rabbit-mq.type';
+import { UserRegisteredService } from 'src/module/chat-module/feature/user/user-registered/user-registered.handler';
+import { InboxRepository } from '../repository/inbox.repository';
+import { Transactional } from 'typeorm-transactional';
+
+@Injectable()
+export class EventHandlerMapService {
+    constructor(
+        private readonly userRegisteredService: UserRegisteredService,
+        private readonly inboxRepository: InboxRepository,
+    ) { }
+    private readonly logger = new Logger(EventHandlerMapService.name);
+
+    // Map event names to handlers
+    public eventHandlerMap: ChatEventHandlerMap = {
+        'user.registered': [
+            (payload: UserRegisteredMQEventPayload) => this.handleUserRegistered(payload),
+        ]
+    };
+
+    @Transactional({
+        connectionName: process.env.DB_POSTGRES_CHAT_SCHEMA || 'chat_schema',
+    })
+    async executeHandler(eventName: string, payload: any, outbox_uuid: string) {
+        const handlers = this.eventHandlerMap[eventName];
+        if (!handlers || !handlers.length) {
+            this.logger.debug(`No handler found for event: ${eventName} in Chat Module`);
+            return;
+        }
+
+        for (const handler of handlers) {
+            const alreadyProcessed = await this.inboxRepository.findByOutboxUuidAndHandlerName(outbox_uuid, handler.name);
+            if (alreadyProcessed) {
+                this.logger.debug(`Duplicated event: ${eventName} in Chat Module`);
+                return;
+            }
+            await handler(payload, outbox_uuid, eventName);
+            await this.inboxRepository.createEntry({ outbox_uuid, event_name: eventName, handler_name: handler.name });
+        }
+    }
+
+    async handleUserRegistered(payload: UserRegisteredMQEventPayload) {
+        await this.userRegisteredService.handle(payload);
+    }
+}
