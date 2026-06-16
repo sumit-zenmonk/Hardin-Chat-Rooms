@@ -1,15 +1,15 @@
-import { IsString, IsEmail, IsNotEmpty, MinLength, IsEnum, IsOptional, Min, Max } from 'class-validator';
+import { IsString, IsEmail, IsNotEmpty, MinLength, IsEnum, IsOptional, Min, Max, MaxLength } from 'class-validator';
 
 export class CreateRoomDto {
     @IsString()
     @IsNotEmpty()
-    @Min(3)
-    @Max(40)
+    @MinLength(3)
+    @MaxLength(40)
     name: string;
 
     @IsString()
-    @Min(10)
-    @Max(100)
+    @MinLength(10)
+    @MaxLength(100)
     @IsOptional()
     description: string;
 }

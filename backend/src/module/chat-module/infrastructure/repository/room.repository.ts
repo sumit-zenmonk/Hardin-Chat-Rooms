@@ -19,7 +19,7 @@ export class RoomRepository extends Repository<RoomEntity> {
     }
 
     async findByUuid(uuid: string) {
-        const room = await this.find({
+        const room = await this.findOne({
             where: {
                 uuid: uuid
             },
@@ -31,7 +31,7 @@ export class RoomRepository extends Repository<RoomEntity> {
     }
 
     async findByCreatorUuidAndUuid(creator_uuid: string, uuid: string) {
-        const room = await this.find({
+        const room = await this.findOne({
             where: {
                 creator_uuid: creator_uuid,
                 uuid: uuid
@@ -44,7 +44,7 @@ export class RoomRepository extends Repository<RoomEntity> {
     }
 
     async findByCreatorUuidAndName(creator_uuid: string, name: string) {
-        const room = await this.find({
+        const room = await this.findOne({
             where: {
                 creator_uuid: creator_uuid,
                 name: name

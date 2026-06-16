@@ -9,6 +9,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import styles from "./create-room.module.css";
 import { CreateRoomSchema, CreateRoomSchemaSchemaType } from "@/schemas/create-room";
 import { createRoom } from "@/redux/feature/room/room-action";
+import { enqueueSnackbar } from "notistack";
 
 interface AddressModalProps {
     isOpen: boolean;
@@ -36,8 +37,13 @@ export default function CreateRoomModal({ isOpen, onClose }: AddressModalProps) 
     }, [isOpen, dispatch]);
 
     const onSubmit = async (data: CreateRoomSchemaSchemaType) => {
-        await dispatch(createRoom(data));
-        reset();
+        try {
+            await dispatch(createRoom(data)).unwrap();
+            reset();
+        } catch (error: any) {
+            enqueueSnackbar(error, { variant: "error" });
+            console.log(error);
+        }
     };
 
     return (
@@ -64,7 +70,7 @@ export default function CreateRoomModal({ isOpen, onClose }: AddressModalProps) 
                         helperText={errors.description?.message}
                         fullWidth
                         multiline
-                        rows={4}
+                        minRows={4}
                         maxRows={6}
                     />
 
