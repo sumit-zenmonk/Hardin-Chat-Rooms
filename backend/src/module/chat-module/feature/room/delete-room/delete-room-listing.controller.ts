@@ -1,0 +1,13 @@
+import { Body, Controller, Delete, Param, Req } from "@nestjs/common";
+import { DeleteRoomService } from "./delete-room-listing.handler";
+import type { Request } from "express";
+
+@Controller()
+export class DeleteRoomController {
+    constructor(private readonly deleteRoomService: DeleteRoomService) { }
+
+    @Delete('/:uuid')
+    async deleteComment(@Req() req: Request, @Param('uuid') uuid: string) {
+        return await this.deleteRoomService.handle(req, uuid);
+    }
+}

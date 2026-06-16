@@ -26,33 +26,7 @@ export default function HeaderComp() {
     return (
         <header className={styles.header}>
             <Box className={styles.leftContainer}>
-                {/* <p onClick={() => {
-                    router.push("/")
-                }}>Ecommerce Microservice</p> */}
-                <Box className={styles.logoContainer}
-                    onClick={() => {
-                        router.push("/")
-                    }}
-                >
-                    <Box className={styles.logoIcon}>
-                        <svg
-                            width="40"
-                            height="40"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            // strokeWidth="2.5"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                        >
-                            <path d="M12 2L2 7l10 5 10-5-10-5z" />
-                            <path d="M2 17l10 5 10-5" />
-                            <path d="M2 12l10 5 10-5" />
-                        </svg>
-                    </Box>
-
-                    <span className={styles.logoText}>Hardin Chat</span>
-                </Box>
+                <p onClick={() => { router.push("/") }}>Hardin Chat</p>
             </Box>
 
             <Box className={styles.rightContainer}>
@@ -72,6 +46,14 @@ export default function HeaderComp() {
                             }}
                         >
                             Dashboard
+                        </Button>
+
+                        <Button
+                            onClick={() => {
+                                router.push("/room")
+                            }}
+                        >
+                            Room
                         </Button>
 
                         <Button

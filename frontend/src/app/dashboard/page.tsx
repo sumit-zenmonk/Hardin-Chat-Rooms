@@ -1,8 +1,8 @@
 "use client";
 
-import styles from "./home.module.css";
+import styles from "./dashboard.module.css";
 
-export default function Home() {
+export default function Dashboard() {
   return (
     <h1>Dashboard</h1>
   );

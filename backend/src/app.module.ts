@@ -21,6 +21,7 @@ import * as UserCronModule from './module/auth-module/infrastructure/cron/cron.m
 import { UserModule } from './module/auth-module/feature/user/user.module';
 import { ChatRabbitMQModule } from './module/chat-module/infrastructure/rabbit-mq/rabbit-mq.module';
 import { chatDataSource } from './module/chat-module/infrastructure/database/data-source';
+import { RoomModule } from './module/chat-module/feature/room/room.module';
 
 @Module({
   imports: [
@@ -70,6 +71,7 @@ import { chatDataSource } from './module/chat-module/infrastructure/database/dat
           options as DataSourceOptions,
         ),
     }),
+    RoomModule,
   ],
   controllers: [AppController],
   providers: [AppService, UserRepository, JwtHelperService],

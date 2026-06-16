@@ -1,0 +1,88 @@
+"use client";
+
+import React, { useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks.ts";
+import { Modal, Box, Typography, TextField, Button, IconButton, } from "@mui/material";
+import CloseIcon from "@mui/icons-material/Close";
+import styles from "./create-room.module.css";
+import { CreateRoomSchema, CreateRoomSchemaSchemaType } from "@/schemas/create-room";
+import { createRoom } from "@/redux/feature/room/room-action";
+
+interface AddressModalProps {
+    isOpen: boolean;
+    onClose: () => void;
+}
+
+export default function CreateRoomModal({ isOpen, onClose }: AddressModalProps) {
+    const dispatch = useAppDispatch();
+
+    const {
+        register,
+        handleSubmit,
+        reset,
+        formState: { errors },
+    } = useForm<CreateRoomSchemaSchemaType>({
+        resolver: zodResolver(CreateRoomSchema),
+        defaultValues: {
+            description: "",
+            name: ""
+        },
+    });
+
+    useEffect(() => {
+        if (isOpen) { };
+    }, [isOpen, dispatch]);
+
+    const onSubmit = async (data: CreateRoomSchemaSchemaType) => {
+        await dispatch(createRoom(data));
+        reset();
+    };
+
+    return (
+        <Modal open={isOpen} onClose={onClose}>
+            <Box className={styles.modalContainer}>
+                <Box className={styles.header}>
+                    <Typography variant="h6">
+                        Add Address
+                    </Typography>
+                </Box>
+
+                <form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
+                    <TextField
+                        label="Name"
+                        {...register("name")}
+                        error={!!errors.name}
+                        helperText={errors.name?.message}
+                        fullWidth
+                    />
+                    <TextField
+                        label="Description"
+                        {...register("description")}
+                        error={!!errors.description}
+                        helperText={errors.description?.message}
+                        fullWidth
+                        multiline
+                        rows={4}
+                        maxRows={6}
+                    />
+
+                    <Button
+                        type="submit"
+                        color="primary"
+                        fullWidth
+                    // disabled={loading}
+                    // startIcon={loading && <CircularProgress size={20} />}
+                    >
+                        Add Address
+                    </Button>
+                </form>
+
+                <IconButton onClick={onClose} className={styles.closebtn}>
+                    <CloseIcon />
+                </IconButton>
+            </Box>
+        </Modal>
+    );
+}
