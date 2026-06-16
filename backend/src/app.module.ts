@@ -11,6 +11,7 @@ import { DataSourceOptions } from 'typeorm';
 import { AuthenticateMiddleware } from './common/infrastruture/middleware/authenticate.middleware';
 import { createTransactionalDataSource } from './common/infrastruture/services/typeorm.transactional';
 import { RabbitMQCommonModule } from './common/infrastruture/rabbit-mq/rabbit-mq.module';
+import { SocketModule } from './common/infrastruture/socket/socket.module';
 
 // User Module
 import { userDataSource } from './module/auth-module/infrastructure/database/data-source';
@@ -35,6 +36,7 @@ import { chatDataSource } from './module/chat-module/infrastructure/database/dat
     }),
     ScheduleModule.forRoot(),
     RabbitMQCommonModule,
+    SocketModule,
 
     //User Modules
     TypeOrmModule.forRootAsync({

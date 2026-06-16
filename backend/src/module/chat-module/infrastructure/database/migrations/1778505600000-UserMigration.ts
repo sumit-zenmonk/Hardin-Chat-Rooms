@@ -9,7 +9,6 @@ export class userMigration1778505600000 implements MigrationInterface {
                 name: "user",
                 columns: [
                     { name: "uuid", type: "uuid", isPrimary: true, generationStrategy: "uuid", default: "uuid_generate_v4()", },
-                    { name: "id", type: "bigint", isGenerated: true, generationStrategy: "increment", isUnique: true, isNullable: false, },
                     { name: "name", type: "varchar", isNullable: false, },
                     { name: "email", type: "varchar", isUnique: true, isNullable: false, },
                     { name: "created_at", type: "timestamp", default: "now()", },

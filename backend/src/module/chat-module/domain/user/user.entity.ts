@@ -1,23 +1,19 @@
-import { Column, CreateDateColumn, DeleteDateColumn, Entity, Generated, PrimaryColumn, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { Column, CreateDateColumn, DeleteDateColumn, Entity, Generated, OneToMany, PrimaryColumn, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { RoomEntity } from "../room/room.entity";
 
 @Entity('user')
 export class UserEntity {
     @PrimaryGeneratedColumn("uuid")
     uuid: string;
 
-    @Column({
-        type: "bigint",
-        generated: "increment",
-        unique: true,
-        select: false,
-    })
-    id: number;
-
     @Column({ type: "varchar", nullable: false, })
     name: string;
 
     @Column({ type: "varchar", nullable: false, unique: true })
     email: string;
+
+    @OneToMany(() => RoomEntity, (room) => room.creator)
+    rooms: RoomEntity[];
 
     @CreateDateColumn()
     created_at: Date;

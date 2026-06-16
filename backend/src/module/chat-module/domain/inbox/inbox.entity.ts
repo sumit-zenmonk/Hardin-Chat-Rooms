@@ -5,14 +5,6 @@ export class InboxEntity {
     @PrimaryGeneratedColumn("uuid")
     uuid: string;
 
-    @Column({
-        type: "bigint",
-        generated: "increment",
-        unique: true,
-        select: false,
-    })
-    id: number;
-
     @Column({ type: "varchar", nullable: false, })
     event_name: string;
 

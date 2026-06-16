@@ -6,6 +6,7 @@ import 'dotenv/config';
 import { InboxEntity } from "../../domain/inbox/inbox.entity";
 import { UserEntity } from "../../domain/user/user.entity";
 import { OutboxEntity } from "../../domain/outbox/outbox.entity";
+import { RoomEntity } from "../../domain/room/room.entity";
 
 const options: DataSourceOptions = {
     type: process.env.DB_POSTGRES_TYPE as any,
@@ -16,6 +17,7 @@ const options: DataSourceOptions = {
     database: process.env.DB_POSTGRES_DATABASE,
     entities: [
         UserEntity, InboxEntity, OutboxEntity,
+        RoomEntity,
     ],
     schema: process.env.DB_POSTGRES_CHAT_SCHEMA || 'chat_schema',
     synchronize: false,

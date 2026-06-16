@@ -1,13 +1,13 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { ChatEventHandlerMap, UserRegisteredMQEventPayload } from './rabbit-mq.type';
-import { UserRegisteredService } from 'src/module/chat-module/feature/user/user-registered/user-registered.handler';
+import { RegisterUserService } from 'src/module/chat-module/feature/user/register-user/register-user.handler';
 import { InboxRepository } from '../repository/inbox.repository';
 import { Transactional } from 'typeorm-transactional';
 
 @Injectable()
 export class EventHandlerMapService {
     constructor(
-        private readonly userRegisteredService: UserRegisteredService,
+        private readonly registerUserService: RegisterUserService,
         private readonly inboxRepository: InboxRepository,
     ) { }
     private readonly logger = new Logger(EventHandlerMapService.name);
@@ -15,7 +15,7 @@ export class EventHandlerMapService {
     // Map event names to handlers
     public eventHandlerMap: ChatEventHandlerMap = {
         'user.registered': [
-            (payload: UserRegisteredMQEventPayload) => this.handleUserRegistered(payload),
+            (payload: UserRegisteredMQEventPayload) => this.handleUserRegister(payload),
         ]
     };
 
@@ -40,7 +40,7 @@ export class EventHandlerMapService {
         }
     }
 
-    async handleUserRegistered(payload: UserRegisteredMQEventPayload) {
-        await this.userRegisteredService.handle(payload);
+    async handleUserRegister(payload: UserRegisteredMQEventPayload) {
+        await this.registerUserService.handle(payload);
     }
 }

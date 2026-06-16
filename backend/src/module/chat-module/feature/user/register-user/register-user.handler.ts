@@ -4,7 +4,7 @@ import { UserRepository } from "src/module/chat-module/infrastructure/repository
 import { Transactional } from "typeorm-transactional";
 
 @Injectable()
-export class UserRegisteredService {
+export class RegisterUserService {
     constructor(
         private readonly repository: UserRepository,
     ) { }
