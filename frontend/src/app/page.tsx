@@ -14,6 +14,7 @@ import { createRoomMember } from "@/redux/feature/member/member-action";
 export default function Home() {
   const dispatch = useAppDispatch();
   const { publicRooms, publicRoomsTotalDocuments } = useAppSelector((state: RootState) => state.roomReducer);
+  const { user } = useAppSelector((state: RootState) => state.authReducer);
 
   useEffect(() => {
     fetchRooms();
@@ -71,11 +72,13 @@ export default function Home() {
                     <Typography className={styles.description}>{room.description}</Typography>
                   </CardContent>
 
-                  <Button
-                    onClick={() => handleJoin(room.uuid)}
-                  >
-                    Join
-                  </Button>
+                  {
+                    user &&
+                    <Button
+                      onClick={() => handleJoin(room.uuid)}
+                    >
+                      Join
+                    </Button>}
                 </Card>
               );
             })}
