@@ -1,6 +1,6 @@
 "use client";
 
-import { Box, CircularProgress, Container, Typography } from "@mui/material";
+import { Box, Button, CircularProgress, Container, Typography, TextField, IconButton } from "@mui/material";
 import styles from "./room.module.css";
 import { useEffect, useMemo, useState } from "react";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks.ts";
@@ -8,6 +8,10 @@ import { getRoomMembers } from "@/redux/feature/member/member-action";
 import { useParams, useRouter } from "next/navigation";
 import { RootState } from "@/redux/store";
 import InfiniteScroll from "react-infinite-scroll-component";
+import SendIcon from '@mui/icons-material/Send';
+import AttachFileIcon from '@mui/icons-material/AttachFile';
+import EmojiEmotionsIcon from '@mui/icons-material/EmojiEmotions';
+import { enqueueSnackbar } from "notistack";
 
 export default function SpecificRoom() {
   const dispatch = useAppDispatch();
@@ -17,10 +21,26 @@ export default function SpecificRoom() {
   const members = roomMembers?.[room_uuid];
   const [offset, setOffset] = useState(Number(process.env.NEXT_PUBLIC_PAGE_OFFSET) || 0);
   const limit = Number(process.env.NEXT_PUBLIC_PAGE_LIMIT) || 10;
+  const [message, setMessage] = useState('');
 
   useEffect(() => {
     dispatch(getRoomMembers({ room_uuid: room_uuid, limit: 0, offset: 0 })).unwrap();
   }, []);
+
+  const handleSend = () => {
+    if (message.trim()) {
+      console.log(message);
+      enqueueSnackbar(message, { variant: "info" })
+      setMessage('');
+    }
+  };
+
+  const handleKeyPress = (e: any) => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      handleSend();
+    }
+  };
 
   return (
     <Container maxWidth="xl" className={styles.container}>
@@ -47,6 +67,39 @@ export default function SpecificRoom() {
 
           </Box>
         </InfiniteScroll>
+      </Box>
+
+      <Box className={styles.chatContainer}>
+        <Box sx={{ display: 'flex', gap: 1 }}>
+          <IconButton
+            className={`${styles.actionButton} ${styles.sendButton}`}
+            size="small"
+          >
+            <EmojiEmotionsIcon />
+          </IconButton>
+        </Box>
+
+        <Box className={styles.inputWrapper}>
+          <TextField
+            className={styles.inputField}
+            placeholder="Type a message"
+            variant="standard"
+            multiline
+            minRows={1}
+            maxRows={4}
+            value={message}
+            onChange={(e) => setMessage(e.target.value)}
+            onKeyDown={handleKeyPress}
+          />
+        </Box>
+
+        <IconButton
+          className={`${styles.actionButton} ${message.trim() ? styles.sendButton : ''}`}
+          onClick={handleSend}
+          disabled={!message.trim()}
+        >
+          <SendIcon fontSize="small" />
+        </IconButton>
       </Box>
     </Container>
   );
