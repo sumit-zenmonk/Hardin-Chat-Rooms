@@ -1,6 +1,6 @@
 import { Injectable, Logger, OnModuleInit } from '@nestjs/common';
 import { RabbitMQService } from './rabbit-mq.service';
-import { EventHandlerMapService } from './event-handler.map.service';
+import { ProcessorsService } from './processors.service';
 import { RabbitMQConsumerMessage } from '../../../../common/infrastruture/rabbit-mq/rabbit-mq.type';
 
 @Injectable()
@@ -9,7 +9,7 @@ export class ChatRabbitMQConsumerInitializer implements OnModuleInit {
 
     constructor(
         private readonly rabbitMQService: RabbitMQService,
-        private readonly eventHandlerMapService: EventHandlerMapService,
+        private readonly processorsService: ProcessorsService,
     ) { }
 
     async onModuleInit() {
@@ -22,7 +22,7 @@ export class ChatRabbitMQConsumerInitializer implements OnModuleInit {
                 this.logger.log(`Processing event-> ${event_name} of outbox_uuid -> (${outbox_uuid})`);
 
                 try {
-                    await this.eventHandlerMapService.executeHandler(event_name, payload, outbox_uuid);
+                    await this.processorsService.executeHandler(event_name, payload, outbox_uuid);
                 } catch (error) {
                     this.logger.error(`Error executing handler for event ${event_name}:`, error);
                     throw error;

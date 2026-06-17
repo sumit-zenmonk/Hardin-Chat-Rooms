@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { RabbitMQService } from './rabbit-mq.service';
-import { EventHandlerMapService } from './event-handler.map.service';
+import { ProcessorsService } from './processors.service';
 import { ChatRabbitMQConsumerInitializer } from './rabbit-mq-consumer-initializer';
 import { RegisterUserService } from '../../feature/user/register-user/register-user.handler';
 import { UserRepository } from '../repository/user.repository';
@@ -13,7 +13,7 @@ import { RoomMemberRepository } from '../repository/room-member.repository';
     providers: [
         RabbitMQService,
         ChatRabbitMQConsumerInitializer,
-        EventHandlerMapService,
+        ProcessorsService,
         RegisterUserService,
         InboxRepository,
         UserRepository,
@@ -21,6 +21,6 @@ import { RoomMemberRepository } from '../repository/room-member.repository';
         RoomRepository,
         RoomMemberRepository,
     ],
-    exports: [RabbitMQService, EventHandlerMapService],
+    exports: [RabbitMQService, ProcessorsService],
 })
 export class ChatRabbitMQModule { }
