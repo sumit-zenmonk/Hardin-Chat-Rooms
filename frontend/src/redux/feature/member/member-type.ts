@@ -1,8 +1,41 @@
-export interface CreateRoomMemberPayload {
-    room_uuid: string
+export interface Room {
+    uuid: string;
+    name: string;
+    description: string;
+    creator_uuid: string;
+    created_at: string;
+    updated_at: string;
+    deleted_at: string | null;
+}
+
+export interface User {
+    uuid: string;
+    name: string;
+    email: string;
+    created_at: string;
+    updated_at: string;
+    deleted_at: string | null;
+}
+
+export interface RoomMember {
+    uuid: string;
+    room_uuid: string;
+    user_uuid: string;
+    is_online: boolean;
+    room: Room;
+    user: User;
+    created_at: string;
+    updated_at: string;
+    deleted_at: string | null;
 }
 
 export interface RoomMemberState {
+    roomMembers: Record<string, RoomMember[]>;
+    roomMembersTotalDocuments: Record<string, number>;
     loading: boolean;
     error: string | null;
+}
+
+export interface CreateRoomMemberPayload {
+    room_uuid: string
 }

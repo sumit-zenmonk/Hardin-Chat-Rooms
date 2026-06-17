@@ -30,10 +30,22 @@ export class roomMemberMigration1778505600002 implements MigrationInterface {
                 onDelete: "CASCADE",
             })
         );
+
+        await queryRunner.createForeignKey(
+            "room_member",
+            new TableForeignKey({
+                columnNames: ["user_uuid"],
+                referencedTableName: "user",
+                referencedColumnNames: ["uuid"],
+                name: "FK_ROOM_MEMBER_USER",
+                onDelete: "CASCADE",
+            })
+        );
     }
 
     public async down(queryRunner: QueryRunner): Promise<void> {
         await queryRunner.dropForeignKey("room_member", "FK_ROOM_MEMBER_ROOM");
+        await queryRunner.dropForeignKey("room_member", "FK_ROOM_MEMBER_USER");
         await queryRunner.dropTable("room_member", true);
     }
 }

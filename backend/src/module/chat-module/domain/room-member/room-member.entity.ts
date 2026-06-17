@@ -1,5 +1,6 @@
 import { Column, CreateDateColumn, DeleteDateColumn, Entity, Generated, JoinColumn, ManyToOne, PrimaryColumn, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 import { RoomEntity } from "../room/room.entity";
+import { UserEntity } from "../user/user.entity";
 
 @Entity('room_member')
 export class RoomMemberEntity {
@@ -18,6 +19,10 @@ export class RoomMemberEntity {
     @ManyToOne(() => RoomEntity, (room) => room.members, { eager: true })
     @JoinColumn({ name: "room_uuid" })
     room: RoomEntity;
+
+    @ManyToOne(() => UserEntity, (user) => user.member)
+    @JoinColumn({ name: "user_uuid" })
+    user: UserEntity;
 
     @CreateDateColumn()
     created_at: Date;

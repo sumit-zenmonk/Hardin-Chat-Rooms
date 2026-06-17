@@ -1,5 +1,6 @@
 import { Column, CreateDateColumn, DeleteDateColumn, Entity, Generated, OneToMany, PrimaryColumn, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 import { RoomEntity } from "../room/room.entity";
+import { RoomMemberEntity } from "../room-member/room-member.entity";
 
 @Entity('user')
 export class UserEntity {
@@ -11,6 +12,9 @@ export class UserEntity {
 
     @Column({ type: "varchar", nullable: false, unique: true })
     email: string;
+
+    @OneToMany(() => RoomMemberEntity, (member) => member.user)
+    member: RoomMemberEntity[];
 
     @OneToMany(() => RoomEntity, (room) => room.creator)
     rooms: RoomEntity[];

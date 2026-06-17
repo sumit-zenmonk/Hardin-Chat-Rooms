@@ -72,7 +72,7 @@ export const getMyRooms = createAsyncThunk<
                 throw new Error(result.message);
             }
 
-            return result;
+            return { ...result, limit, offset };
         } catch (error: any) {
             return rejectWithValue(error.message);
         }
@@ -109,7 +109,7 @@ export const getPublicRooms = createAsyncThunk<
                 throw new Error(result.message);
             }
 
-            return result;
+            return { ...result, limit, offset };
         } catch (error: any) {
             return rejectWithValue(error.message);
         }
@@ -148,7 +148,7 @@ export const getJoinedRooms = createAsyncThunk<
                 throw new Error(result.message);
             }
 
-            return result;
+            return { ...result, limit, offset };
         } catch (error: any) {
             return rejectWithValue(error.message);
         }

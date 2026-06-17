@@ -121,9 +121,17 @@ const roomSlice = createSlice({
             })
             .addCase(getJoinedRooms.fulfilled, (state, action) => {
                 state.loading = false;
-                // if (action.meta.arg.offset == 0) {
-                state.joinedRooms = action.payload.data;
-                // }
+
+                if (action.payload.offset === 0) {
+                    state.joinedRooms = action.payload.data;
+                } else {
+                    const mergedRooms = [
+                        ...state.joinedRooms,
+                        ...action.payload.data,
+                    ];
+                    state.joinedRooms = Array.from(new Map(mergedRooms.map((room) => [room.uuid, room])).values());
+                }
+
                 state.joinedRoomsTotalDocuments = action.payload.totalDocuments;
                 state.error = null;
             })

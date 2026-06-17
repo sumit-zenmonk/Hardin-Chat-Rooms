@@ -2,17 +2,20 @@ import { Module } from "@nestjs/common";
 import { RouterModule } from "@nestjs/core";
 import { CreateRoomMemberModule } from "./create-room-member/create-room-member.module";
 import { DeleteRoomMemberModule } from "./delete-room-member/delete-room-listing.module";
+import { GetRoomMemberListingModule } from "./get-room-member-listing/get-room-member-listing.module";
 
 @Module({
     imports: [
         CreateRoomMemberModule,
         DeleteRoomMemberModule,
+        GetRoomMemberListingModule,
         RouterModule.register([
             {
                 path: 'room/member',
                 children: [
                     { path: '', module: CreateRoomMemberModule },
                     { path: '', module: DeleteRoomMemberModule },
+                    { path: '', module: GetRoomMemberListingModule },
                 ],
             },
         ]),
