@@ -9,9 +9,12 @@ import { useParams, useRouter } from "next/navigation";
 import { RootState } from "@/redux/store";
 import InfiniteScroll from "react-infinite-scroll-component";
 import SendIcon from '@mui/icons-material/Send';
-import AttachFileIcon from '@mui/icons-material/AttachFile';
 import EmojiEmotionsIcon from '@mui/icons-material/EmojiEmotions';
 import { enqueueSnackbar } from "notistack";
+import dynamic from 'next/dynamic';
+
+// Dynamically import the EmojiPicker to disable SSR
+const EmojiPicker = dynamic(() => import('emoji-picker-react'), { ssr: false });
 
 export default function SpecificRoom() {
   const dispatch = useAppDispatch();
@@ -22,15 +25,24 @@ export default function SpecificRoom() {
   const [offset, setOffset] = useState(Number(process.env.NEXT_PUBLIC_PAGE_OFFSET) || 0);
   const limit = Number(process.env.NEXT_PUBLIC_PAGE_LIMIT) || 10;
   const [message, setMessage] = useState('');
+  const [isEmojiPickerOpen, setIsEmojiPickerOpen] = useState(false);
 
   useEffect(() => {
     dispatch(getRoomMembers({ room_uuid: room_uuid, limit: 0, offset: 0 })).unwrap();
   }, []);
 
+  const togglePicker = () => {
+    setIsEmojiPickerOpen((prev) => !prev);
+  };
+  const onEmojiClick = (emojiData: any) => {
+    setMessage((prev) => prev + emojiData.emoji);
+  };
+
   const handleSend = () => {
     if (message.trim()) {
       console.log(message);
       enqueueSnackbar(message, { variant: "info" })
+      setIsEmojiPickerOpen(false);
       setMessage('');
     }
   };
@@ -69,11 +81,18 @@ export default function SpecificRoom() {
         </InfiniteScroll>
       </Box>
 
+      <Box className={styles.emojiPickerBox}>
+        {isEmojiPickerOpen && (
+          <EmojiPicker onEmojiClick={onEmojiClick} />
+        )}
+      </Box>
+
       <Box className={styles.chatContainer}>
         <Box sx={{ display: 'flex', gap: 1 }}>
           <IconButton
             className={`${styles.actionButton} ${styles.sendButton}`}
             size="small"
+            onClick={togglePicker}
           >
             <EmojiEmotionsIcon />
           </IconButton>

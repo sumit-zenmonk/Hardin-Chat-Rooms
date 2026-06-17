@@ -67,6 +67,12 @@
     top: 0;
 }
 
+.emojiPickerBox {
+    position: absolute;
+    bottom: 7%;
+    left: 25%;
+}
+
 .chatContainer {
     position: absolute;
     width: 50%;
