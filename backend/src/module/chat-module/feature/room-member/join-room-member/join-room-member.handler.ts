@@ -9,7 +9,6 @@ export class JoinRoomMemberService {
     ) { }
 
     async handle(body: RoomMemberCreatedMQEventPayload) {
-        console.log('hardin',body);
         await this.roomMemberRepository.createRoomMember({ ...body });
         return;
     }
