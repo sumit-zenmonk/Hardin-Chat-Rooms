@@ -13,7 +13,7 @@ import { createRoomMember } from "@/redux/feature/member/member-action";
 
 export default function Home() {
   const dispatch = useAppDispatch();
-  const { publicRooms, publicRoomsTotalDocuments } = useAppSelector((state: RootState) => state.roomReducer);
+  const { publicRooms, publicRoomsTotalDocuments, joinedRooms } = useAppSelector((state: RootState) => state.roomReducer);
   const { user } = useAppSelector((state: RootState) => state.authReducer);
   const [offset, setOffset] = useState(Number(process.env.NEXT_PUBLIC_PAGE_OFFSET) || 0);
   const limit = Number(process.env.NEXT_PUBLIC_PAGE_LIMIT) || 10;
@@ -69,6 +69,7 @@ export default function Home() {
         >
           <Box className={styles.roomWrapper}>
             {publicRooms && publicRooms.map((room: Room) => {
+              const isJoined = joinedRooms ? joinedRooms.find((joinRoom) => joinRoom.uuid === room.uuid) : [];
               return (
                 <Card
                   key={room.uuid}
@@ -84,8 +85,12 @@ export default function Home() {
                     user &&
                     <Button
                       onClick={() => handleJoin(room.uuid)}
+                      disabled={!!isJoined}
                     >
-                      Join
+                      {
+                        !isJoined ?
+                          'Join' : 'Already joined'
+                      }
                     </Button>}
                 </Card>
               );
