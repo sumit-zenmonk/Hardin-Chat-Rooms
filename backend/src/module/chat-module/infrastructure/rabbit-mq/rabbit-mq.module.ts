@@ -5,6 +5,9 @@ import { ChatRabbitMQConsumerInitializer } from './rabbit-mq-consumer-initialize
 import { RegisterUserService } from '../../feature/user/register-user/register-user.handler';
 import { UserRepository } from '../repository/user.repository';
 import { InboxRepository } from '../repository/inbox.repository';
+import { CreateRoomService } from '../../feature/room/create-room/create-room.handler';
+import { RoomRepository } from '../repository/room.repository';
+import { RoomMemberRepository } from '../repository/room-member.repository';
 
 @Module({
     providers: [
@@ -14,6 +17,9 @@ import { InboxRepository } from '../repository/inbox.repository';
         RegisterUserService,
         InboxRepository,
         UserRepository,
+        CreateRoomService,
+        RoomRepository,
+        RoomMemberRepository,
     ],
     exports: [RabbitMQService, EventHandlerMapService],
 })

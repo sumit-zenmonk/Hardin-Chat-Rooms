@@ -8,8 +8,29 @@ export interface UserRegisteredMQEventPayload {
     deleted_at?: Date;
 }
 
+export interface RoomCreatedMQEventPayload {
+    uuid: string;
+    name: string;
+    description: string;
+    creator_uuid: string;
+    creator: User;
+    created_at: Date,
+    updated_at: Date,
+    deleted_at: Date,
+}
+
+export interface User {
+    uuid: string;
+    name: string;
+    email: string;
+    created_at: Date,
+    updated_at: Date,
+    deleted_at: Date,
+}
+
 export type ChatEventPayloadMap = {
     'user.registered': UserRegisteredMQEventPayload,
+    'room.created': RoomCreatedMQEventPayload,
 };
 
 // Generic union type

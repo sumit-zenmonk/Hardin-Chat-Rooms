@@ -1,13 +1,15 @@
 import { Injectable, Logger } from '@nestjs/common';
-import { ChatEventHandlerMap, UserRegisteredMQEventPayload } from './rabbit-mq.type';
+import { ChatEventHandlerMap, RoomCreatedMQEventPayload, UserRegisteredMQEventPayload } from './rabbit-mq.type';
 import { RegisterUserService } from 'src/module/chat-module/feature/user/register-user/register-user.handler';
 import { InboxRepository } from '../repository/inbox.repository';
 import { Transactional } from 'typeorm-transactional';
+import { CreateRoomService } from '../../feature/room/create-room/create-room.handler';
 
 @Injectable()
 export class EventHandlerMapService {
     constructor(
         private readonly registerUserService: RegisterUserService,
+        private readonly createRoomService: CreateRoomService,
         private readonly inboxRepository: InboxRepository,
     ) { }
     private readonly logger = new Logger(EventHandlerMapService.name);
@@ -18,6 +20,12 @@ export class EventHandlerMapService {
             async function handleUserRegister(payload: UserRegisteredMQEventPayload) {
                 // @ts-ignore
                 await this.handleUserRegister(payload);
+            },
+        ],
+        'room.created': [
+            async function handleRoomCreated(payload: RoomCreatedMQEventPayload) {
+                // @ts-ignore
+                await this.handleRoomCreated(payload);
             },
         ]
     };
@@ -45,5 +53,9 @@ export class EventHandlerMapService {
 
     async handleUserRegister(payload: UserRegisteredMQEventPayload) {
         await this.registerUserService.handle(payload);
+    }
+
+    async handleRoomCreated(payload: RoomCreatedMQEventPayload) {
+        await this.createRoomService.handle(payload);
     }
 }
