@@ -23,10 +23,10 @@
     "migration:user:generate": "npm run typeorm -- -d dist/module/auth-module/infrastructure/database/data-source.js migration:generate src/module/auth-module/infrastructure/database/migrations/InitMigration",
     "migration:user:run": "npm run typeorm -- -d dist/module/auth-module/infrastructure/database/data-source.js migration:run",
     "migration:user:revert": "npm run typeorm -- -d dist/module/auth-module/infrastructure/database/data-source.js migration:revert",
-    "seed:chat:user": "ts-node -r tsconfig-paths/register src/module/chat-module/infrastructure/database/seed/user.seed.ts",
-    "migration:chat:generate": "npm run typeorm -- -d dist/module/chat-module/infrastructure/database/data-source.js migration:generate src/module/chat-module/infrastructure/database/migrations/InitMigration",
-    "migration:chat:run": "npm run typeorm -- -d dist/module/chat-module/infrastructure/database/data-source.js migration:run",
-    "migration:chat:revert": "npm run typeorm -- -d dist/module/chat-module/infrastructure/database/data-source.js migration:revert"
+    "seed:room:user": "ts-node -r tsconfig-paths/register src/module/room-module/infrastructure/database/seed/user.seed.ts",
+    "migration:room:generate": "npm run typeorm -- -d dist/module/room-module/infrastructure/database/data-source.js migration:generate src/module/room-module/infrastructure/database/migrations/InitMigration",
+    "migration:room:run": "npm run typeorm -- -d dist/module/room-module/infrastructure/database/data-source.js migration:run",
+    "migration:room:revert": "npm run typeorm -- -d dist/module/room-module/infrastructure/database/data-source.js migration:revert"
   },
   "dependencies": {
     "@nestjs/common": "^11.0.1",
