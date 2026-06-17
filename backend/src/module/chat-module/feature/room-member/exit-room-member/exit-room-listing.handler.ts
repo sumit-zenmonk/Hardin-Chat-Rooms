@@ -5,7 +5,7 @@ import { SocketService } from "src/common/infrastruture/socket/socket.service";
 import { SocketEventNameEnum } from "src/common/infrastruture/socket/socket.enum";
 
 @Injectable()
-export class DeleteRoomMemberService {
+export class ExitRoomMemberService {
     constructor(
         private readonly roomMemberRepository: RoomMemberRepository,
         private readonly socketService: SocketService,

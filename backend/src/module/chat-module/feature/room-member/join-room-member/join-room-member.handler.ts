@@ -1,5 +1,5 @@
 import { BadRequestException, Injectable } from "@nestjs/common";
-import { CreateRoomMemberDto } from "./create-room-member.dto";
+import { JoinRoomMemberDto } from "./join-room-member.dto";
 import type { Request } from "express";
 import { RoomRepository } from "src/module/chat-module/infrastructure/repository/room.repository";
 import { RoomMemberRepository } from "src/module/chat-module/infrastructure/repository/room-member.repository";
@@ -7,14 +7,14 @@ import { SocketService } from "src/common/infrastruture/socket/socket.service";
 import { SocketEventNameEnum } from "src/common/infrastruture/socket/socket.enum";
 
 @Injectable()
-export class CreateRoomMemberService {
+export class JoinRoomMemberService {
     constructor(
         private readonly roomRepository: RoomRepository,
         private readonly roomMemberRepository: RoomMemberRepository,
         private readonly socketService: SocketService,
     ) { }
 
-    async handle(req: Request, body: CreateRoomMemberDto) {
+    async handle(req: Request, body: JoinRoomMemberDto) {
         const isRoomExists = await this.roomRepository.findByUuid(body.room_uuid);
         if (!isRoomExists) {
             throw new BadRequestException("Room Not Found");
