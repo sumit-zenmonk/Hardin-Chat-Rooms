@@ -1,14 +1,14 @@
 "use client";
 
 import { Box, Container, Typography } from "@mui/material";
-import styles from "./dashboard.module.css";
+import styles from "./room.module.css";
 
-export default function Dashboard() {
+export default function SpecificRoom() {
   return (
     <Container maxWidth="xl" className={styles.container}>
       <Box className={styles.header}>
         <Typography variant="h4" className={styles.heading}>
-          Dashboard
+          specific Room
         </Typography>
 
       </Box>

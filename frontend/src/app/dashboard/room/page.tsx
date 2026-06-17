@@ -11,8 +11,10 @@ import { RootState } from "@/redux/store";
 import InfiniteScroll from "react-infinite-scroll-component";
 import type { Room } from "@/redux/feature/room/room-type";
 import DeleteIcon from '@mui/icons-material/Delete';
+import { useRouter } from "next/navigation";
 
 export default function Room() {
+    const router = useRouter();
     const dispatch = useAppDispatch();
     const { myrooms, myRoomsTotalDocuments } = useAppSelector((state: RootState) => state.roomReducer);
     const [openCreateRoomModal, setOpenCreateRoomModal] = useState(false);
@@ -87,6 +89,12 @@ export default function Room() {
                                     >
                                         <Typography className={styles.roomName}>{room.name}</Typography>
                                         <Typography className={styles.description}>{room.description}</Typography>
+
+                                        <Button
+                                            onClick={() => router.push(`/room/${room.uuid}`)}
+                                        >
+                                            View Room
+                                        </Button>
 
                                         <Button
                                             className={styles.deleteRoom}

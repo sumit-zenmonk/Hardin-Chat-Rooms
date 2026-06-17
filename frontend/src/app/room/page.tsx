@@ -11,8 +11,10 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import type { Room } from "@/redux/feature/room/room-type";
 import DeleteIcon from '@mui/icons-material/Delete';
 import { deleteRoomMember } from "@/redux/feature/member/member-action";
+import { useRouter } from "next/navigation";
 
 export default function Room() {
+    const router = useRouter();
     const dispatch = useAppDispatch();
     const { joinedRooms, joinedRoomsTotalDocuments } = useAppSelector((state: RootState) => state.roomReducer);
     const [offset, setOffset] = useState(Number(process.env.NEXT_PUBLIC_PAGE_OFFSET) || 0);
@@ -80,6 +82,11 @@ export default function Room() {
                                         <Typography className={styles.description}>{room.description}</Typography>
                                     </CardContent>
 
+                                    <Button
+                                        onClick={() => router.push(`/room/${room.uuid}`)}
+                                    >
+                                        View Room
+                                    </Button>
 
                                     <Button
                                         className={styles.deleteRoom}

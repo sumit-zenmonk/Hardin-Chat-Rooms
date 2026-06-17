@@ -10,8 +10,10 @@ import { RootState } from "@/redux/store";
 import InfiniteScroll from "react-infinite-scroll-component";
 import type { Room } from "@/redux/feature/room/room-type";
 import { createRoomMember } from "@/redux/feature/member/member-action";
+import { useRouter } from "next/navigation";
 
 export default function Home() {
+  const router = useRouter();
   const dispatch = useAppDispatch();
   const { publicRooms, publicRoomsTotalDocuments, joinedRooms } = useAppSelector((state: RootState) => state.roomReducer);
   const { user } = useAppSelector((state: RootState) => state.authReducer);
@@ -91,7 +93,13 @@ export default function Home() {
                         !isJoined ?
                           'Join' : 'Already joined'
                       }
-                    </Button>}
+                    </Button>
+                  }
+                  <Button
+                    onClick={() => router.push(`/room/${room.uuid}`)}
+                  >
+                    View Room
+                  </Button>
                 </Card>
               );
             })}
