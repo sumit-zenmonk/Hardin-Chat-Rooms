@@ -77,3 +77,31 @@ export const getRoomChats = createAsyncThunk<
         }
     }
 );
+
+export const deleteRoomChat = createAsyncThunk<
+    { message: string; chat_uuid: string, user_uuid: string },
+    { chat_uuid: string },
+    { state: RootState }
+>("delete/room/chat", async (payload, { getState, rejectWithValue }) => {
+    try {
+        const token = getState().authReducer.token || "";
+        const user_uuid = getState().authReducer.user?.uuid || "";
+
+        const res = await fetch(`${BACKEND_URL}/api/v1/room/chat/${payload.chat_uuid}`, {
+            method: "DELETE",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: token,
+            },
+        });
+
+        const result = await res.json();
+        if (!res.ok) {
+            throw new Error(result.message);
+        }
+
+        return { message: result.message, chat_uuid: payload.chat_uuid, user_uuid: user_uuid };
+    } catch (err: any) {
+        return rejectWithValue(err.message);
+    }
+});
