@@ -25,6 +25,10 @@ export interface RoomDeletedMQEventPayload {
     room_uuid: string;
 }
 
+export interface RoomMemberDeletedMQEventPayload {
+    room_member_uuid: string;
+}
+
 export interface User {
     uuid: string;
     name: string;
@@ -58,6 +62,7 @@ export type ChatEventPayloadMap = {
     'room.created': RoomCreatedMQEventPayload,
     'room.deleted': RoomDeletedMQEventPayload,
     'room.member.created': RoomMemberCreatedMQEventPayload,
+    'room.member.deleted': RoomMemberDeletedMQEventPayload,
 };
 
 // Generic union type

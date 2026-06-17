@@ -1,11 +1,12 @@
 import { Injectable, Logger } from '@nestjs/common';
-import { ChatEventHandlerMap, RoomCreatedMQEventPayload, RoomDeletedMQEventPayload, RoomMemberCreatedMQEventPayload, UserRegisteredMQEventPayload } from './rabbit-mq.type';
+import { ChatEventHandlerMap, RoomCreatedMQEventPayload, RoomDeletedMQEventPayload, RoomMemberCreatedMQEventPayload, RoomMemberDeletedMQEventPayload, UserRegisteredMQEventPayload } from './rabbit-mq.type';
 import { RegisterUserService } from 'src/module/chat-module/feature/user/register-user/register-user.handler';
 import { InboxRepository } from '../repository/inbox.repository';
 import { Transactional } from 'typeorm-transactional';
 import { CreateRoomService } from '../../feature/room/create-room/create-room.handler';
 import { DeleteRoomService } from '../../feature/room/delete-room/delete-room.handler';
-import { JoinRoomMemberService } from '../../feature/room/join-room-member/join-room-member.handler';
+import { JoinRoomMemberService } from '../../feature/room-member/join-room-member/join-room-member.handler';
+import { ExitRoomMemberService } from '../../feature/room-member/exit-room-member/exit-room-listing.handler';
 
 @Injectable()
 export class ProcessorsService {
@@ -14,6 +15,7 @@ export class ProcessorsService {
         private readonly createRoomService: CreateRoomService,
         private readonly deleteRoomService: DeleteRoomService,
         private readonly joinRoomMemberService: JoinRoomMemberService,
+        private readonly exitRoomMemberService: ExitRoomMemberService,
         private readonly inboxRepository: InboxRepository,
     ) { }
     private readonly logger = new Logger(ProcessorsService.name);
@@ -42,6 +44,12 @@ export class ProcessorsService {
             async function handleRoomMemberCreated(payload: RoomMemberCreatedMQEventPayload) {
                 // @ts-ignore
                 await this.handleRoomMemberCreated(payload);
+            },
+        ],
+        'room.member.deleted': [
+            async function handleRoomMemberDeleted(payload: RoomMemberDeletedMQEventPayload) {
+                // @ts-ignore
+                await this.handleRoomMemberDeleted(payload);
             },
         ],
     };
@@ -81,5 +89,9 @@ export class ProcessorsService {
 
     async handleRoomMemberCreated(payload: RoomMemberCreatedMQEventPayload) {
         await this.joinRoomMemberService.handle(payload);
+    }
+
+    async handleRoomMemberDeleted(payload: RoomMemberDeletedMQEventPayload) {
+        await this.exitRoomMemberService.handle(payload);
     }
 }

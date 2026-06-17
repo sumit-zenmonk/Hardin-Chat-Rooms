@@ -9,7 +9,8 @@ import { CreateRoomService } from '../../feature/room/create-room/create-room.ha
 import { RoomRepository } from '../repository/room.repository';
 import { RoomMemberRepository } from '../repository/room-member.repository';
 import { DeleteRoomService } from '../../feature/room/delete-room/delete-room.handler';
-import { JoinRoomMemberService } from '../../feature/room/join-room-member/join-room-member.handler';
+import { JoinRoomMemberService } from '../../feature/room-member/join-room-member/join-room-member.handler';
+import { ExitRoomMemberService } from '../../feature/room-member/exit-room-member/exit-room-listing.handler';
 
 @Module({
     providers: [
@@ -24,6 +25,7 @@ import { JoinRoomMemberService } from '../../feature/room/join-room-member/join-
         RoomMemberRepository,
         DeleteRoomService,
         JoinRoomMemberService,
+        ExitRoomMemberService,
     ],
     exports: [RabbitMQService, ProcessorsService],
 })
