@@ -30,6 +30,25 @@ export class RoomChatRepository extends Repository<RoomChatEntity> {
         return chat;
     }
 
+    async getRoomChatListing(room_uuid: string, offset?: number, limit?: number) {
+        const [data, total] = await this.findAndCount({
+            where: {
+                room_uuid: room_uuid,
+            },
+            relations: {
+                member: true,
+                room: true,
+            },
+            order: {
+                created_at: 'DESC'
+            },
+            skip: offset || Number(process.env.page_offset) || 0,
+            take: limit || Number(process.env.page_limit) || 10
+        });
+
+        return { data, total };
+    }
+
     async deleteRoomChat(uuid: string) {
         await this.softDelete(uuid);
         return;

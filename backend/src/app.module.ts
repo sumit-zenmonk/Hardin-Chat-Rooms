@@ -116,6 +116,7 @@ export class AppModule implements NestModule {
         { path: '/user/register', method: RequestMethod.ALL },
         { path: '/room/public', method: RequestMethod.GET },
         { path: '/room/member/*path', method: RequestMethod.GET },
+        { path: '/room/chat/*path', method: RequestMethod.GET },
       )
       .forRoutes('/*path');
   }

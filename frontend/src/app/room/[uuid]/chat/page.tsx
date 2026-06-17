@@ -12,7 +12,7 @@ import SendIcon from '@mui/icons-material/Send';
 import EmojiEmotionsIcon from '@mui/icons-material/EmojiEmotions';
 import { enqueueSnackbar } from "notistack";
 import dynamic from 'next/dynamic';
-import { createRoomChat } from "@/redux/feature/chat/chat-action";
+import { createRoomChat, getRoomChats } from "@/redux/feature/chat/chat-action";
 
 // Dynamically import the EmojiPicker to disable SSR
 const EmojiPicker = dynamic(() => import('emoji-picker-react'), { ssr: false });
@@ -32,6 +32,7 @@ export default function SpecificRoomChat() {
 
   useEffect(() => {
     dispatch(getRoomMembers({ room_uuid: room_uuid, limit: 0, offset: 0 })).unwrap();
+    dispatch(getRoomChats({ room_uuid: room_uuid, limit: 0, offset: 0 })).unwrap();
   }, []);
 
   const togglePicker = () => {

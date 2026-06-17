@@ -39,3 +39,41 @@ export const createRoomChat = createAsyncThunk<
         }
     }
 );
+
+export const getRoomChats = createAsyncThunk<
+    { data: any, totalDocuments: number, message: string, limit: number, offset: number },
+    { room_uuid: string, limit?: number; offset?: number },
+    { state: RootState }
+>(
+    "room/chats",
+    async (
+        {
+            room_uuid,
+            limit = LIMIT,
+            offset = OFFSET,
+        },
+        { rejectWithValue }
+    ) => {
+        try {
+
+            const res = await fetch(
+                `${BACKEND_URL}/api/v1/room/chat/${room_uuid}?limit=${limit}&offset=${offset}`,
+                {
+                    method: "GET",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                }
+            );
+
+            const result = await res.json();
+            if (!res.ok) {
+                throw new Error(result.message);
+            }
+            console.log(JSON.stringify(result));
+            return result;
+        } catch (error: any) {
+            return rejectWithValue(error.message);
+        }
+    }
+);
