@@ -1,10 +1,11 @@
 import { Injectable, Logger } from '@nestjs/common';
-import { ChatEventHandlerMap, RoomCreatedMQEventPayload, RoomDeletedMQEventPayload, UserRegisteredMQEventPayload } from './rabbit-mq.type';
+import { ChatEventHandlerMap, RoomCreatedMQEventPayload, RoomDeletedMQEventPayload, RoomMemberCreatedMQEventPayload, UserRegisteredMQEventPayload } from './rabbit-mq.type';
 import { RegisterUserService } from 'src/module/chat-module/feature/user/register-user/register-user.handler';
 import { InboxRepository } from '../repository/inbox.repository';
 import { Transactional } from 'typeorm-transactional';
 import { CreateRoomService } from '../../feature/room/create-room/create-room.handler';
 import { DeleteRoomService } from '../../feature/room/delete-room/delete-room.handler';
+import { JoinRoomMemberService } from '../../feature/room/join-room-member/join-room-member.handler';
 
 @Injectable()
 export class ProcessorsService {
@@ -12,6 +13,7 @@ export class ProcessorsService {
         private readonly registerUserService: RegisterUserService,
         private readonly createRoomService: CreateRoomService,
         private readonly deleteRoomService: DeleteRoomService,
+        private readonly joinRoomMemberService: JoinRoomMemberService,
         private readonly inboxRepository: InboxRepository,
     ) { }
     private readonly logger = new Logger(ProcessorsService.name);
@@ -34,6 +36,12 @@ export class ProcessorsService {
             async function handleRoomDeleted(payload: RoomDeletedMQEventPayload) {
                 // @ts-ignore
                 await this.handleRoomDeleted(payload);
+            },
+        ],
+        'room.member.created': [
+            async function handleRoomMemberCreated(payload: RoomMemberCreatedMQEventPayload) {
+                // @ts-ignore
+                await this.handleRoomMemberCreated(payload);
             },
         ],
     };
@@ -69,5 +77,9 @@ export class ProcessorsService {
 
     async handleRoomDeleted(payload: RoomDeletedMQEventPayload) {
         await this.deleteRoomService.handle(payload);
+    }
+
+    async handleRoomMemberCreated(payload: RoomMemberCreatedMQEventPayload) {
+        await this.joinRoomMemberService.handle(payload);
     }
 }
