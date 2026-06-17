@@ -7,7 +7,8 @@ Steps To Run This Repo Code (Open 2 Terminal)
 For DB Migration
 3. user Module -> npm run build && npm run migration:user:run && npm run seed:user:user
 4. Room Module -> npm run build && npm run migration:room:run && npm run seed:room:user
+5. Chat Module -> npm run build && npm run migration:chat:run && npm run seed:chat:user
 
 
 One Click Copy Paste Above Commands into Single Copy Command
-npm run build && npm run migration:user:run && npm run seed:user:user && npm run migration:room:run && npm run seed:room:user
+npm run build && npm run migration:user:run && npm run seed:user:user && npm run migration:room:run && npm run seed:room:user && npm run migration:chat:run && npm run seed:chat:user

@@ -26,6 +26,10 @@ import { roomDataSource } from './module/room-module/infrastructure/database/dat
 import { RoomModule } from './module/room-module/feature/room/room.module';
 import { RoomMemberModule } from './module/room-module/feature/room-member/room.module';
 
+// Chat Module
+import { chatDataSource } from './module/chat-module/infrastructure/database/data-source';
+import { ChatRabbitMQModule } from './module/chat-module/infrastructure/rabbit-mq/rabbit-mq.module';
+
 @Module({
   imports: [
     // common
@@ -76,6 +80,22 @@ import { RoomMemberModule } from './module/room-module/feature/room-member/room.
     }),
     RoomModule,
     RoomMemberModule,
+
+    // Chat Module
+    ChatRabbitMQModule,
+    TypeOrmModule.forRootAsync({
+      name: process.env.DB_POSTGRES_CHAT_SCHEMA || 'chat_schema',
+      useFactory: () => ({
+        ...chatDataSource.options,
+        retryAttempts: Number(process.env.DB_RETRY_ATTEMPTS) || 10,
+        retryDelay: Number(process.env.DB_RETRY_DELAY) || 5000,
+      }),
+      dataSourceFactory: async (options) =>
+        createTransactionalDataSource(
+          process.env.DB_POSTGRES_CHAT_SCHEMA || 'chat_schema',
+          options as DataSourceOptions,
+        ),
+    }),
   ],
   controllers: [AppController],
   providers: [AppService, UserRepository, JwtHelperService],

@@ -14,6 +14,7 @@ export async function createSchemas() {
 
         await client.query(`CREATE SCHEMA IF NOT EXISTS ${process.env.DB_POSTGRES_USER_SCHEMA || 'user_schema'};`);
         await client.query(`CREATE SCHEMA IF NOT EXISTS ${process.env.DB_POSTGRES_ROOM_SCHEMA || 'room_schema'};`);
+        await client.query(`CREATE SCHEMA IF NOT EXISTS ${process.env.DB_POSTGRES_CHAT_SCHEMA || 'chat_schema'};`);
 
         console.log('DB Schema Created SuccessFully');
         await client.end();
