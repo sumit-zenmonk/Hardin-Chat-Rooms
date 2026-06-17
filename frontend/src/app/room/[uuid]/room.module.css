@@ -89,6 +89,13 @@
 
 .email {
     font-size: 0.875rem;
+    font-weight: 700;
+    color: #6b7280;
+}
+
+.role {
+    font-size: 1rem;
+    font-weight: 700;
     color: #6b7280;
 }
 

@@ -82,9 +82,9 @@ export default function SpecificRoom() {
                   </Avatar>
 
                   <CardContent className={styles.cardContent}>
-                    <Typography className={styles.roomMemberName}>{member.user.name}</Typography>
-                    <Typography className={styles.email}>{member.user.email}</Typography>
-                    <Typography className={styles.role}>{member.role}</Typography>
+                    <Typography className={styles.roomMemberName}>Name : {member.user.name}</Typography>
+                    <Typography className={styles.email}>Email : {member.user.email}</Typography>
+                    <Typography className={styles.role}>Role : {member.role}</Typography>
                   </CardContent>
                 </Card>
               );
