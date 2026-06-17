@@ -64,9 +64,12 @@ export default function MyRoomComp() {
                     Infinite Scroll Rooms
                 </Typography>
             </Box>
-            <Button onClick={() => setOpenCreateRoomModal(true)}>
-                Add Room
-            </Button>
+
+            <Box className={styles.sideButtonCard}>
+                <Button onClick={() => setOpenCreateRoomModal(true)}>
+                    Add Room
+                </Button>
+            </Box>
 
             <Box id="scrollableDiv" className={styles.scrollWrapper}>
                 <InfiniteScroll

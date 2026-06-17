@@ -5,6 +5,8 @@ import styles from "./dashboard.module.css";
 import { Box, Button, Typography } from "@mui/material";
 import JoinedRoomComp from "@/component/joined-room-comp/joined-room-comp";
 import MyRoomComp from "@/component/my-room-comp/my-room-comp";
+import AddCircleIcon from '@mui/icons-material/AddCircle';
+import RememberMeIcon from '@mui/icons-material/RememberMe';
 
 export default function Dashboard() {
   const [activeTab, setActiveTab] = useState("dashboard/room");
@@ -26,6 +28,7 @@ export default function Dashboard() {
             }`}
           onClick={() => setActiveTab("dashboard/room")}
         >
+          <AddCircleIcon />
           <Typography>My Rooms</Typography>
         </Box>
 
@@ -34,6 +37,7 @@ export default function Dashboard() {
             }`}
           onClick={() => setActiveTab("room")}
         >
+          <RememberMeIcon />
           <Typography>Joined Rooms</Typography>
         </Box>
       </Box>
