@@ -13,7 +13,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import { deleteRoomMember } from "@/redux/feature/member/member-action";
 import { useRouter } from "next/navigation";
 
-export default function Room() {
+export default function JoinedRoomComp() {
     const router = useRouter();
     const dispatch = useAppDispatch();
     const { joinedRooms, joinedRoomsTotalDocuments } = useAppSelector((state: RootState) => state.roomReducer);

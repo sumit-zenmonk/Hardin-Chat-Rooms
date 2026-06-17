@@ -5,7 +5,7 @@ import styles from "./home.module.css";
 import { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks.ts";
 import { enqueueSnackbar } from "notistack";
-import { getPublicRooms } from "@/redux/feature/room/room-action";
+import { getJoinedRooms, getPublicRooms } from "@/redux/feature/room/room-action";
 import { RootState } from "@/redux/store";
 import InfiniteScroll from "react-infinite-scroll-component";
 import type { Room } from "@/redux/feature/room/room-type";
@@ -22,6 +22,7 @@ export default function Home() {
 
   useEffect(() => {
     if (!publicRooms.length) {
+      dispatch(getJoinedRooms({ limit, offset: 0, })).unwrap();
       dispatch(getPublicRooms({ limit, offset: 0, })).unwrap();
     }
   }, []);

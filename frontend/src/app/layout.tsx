@@ -9,7 +9,7 @@ import { PersistGate } from "redux-persist/lib/integration/react";
 import { StyledEngineProvider } from "@mui/material";
 import HeaderComp from "@/component/header-comp/header-comp";
 import Image from 'next/image';
-import { SocketListener } from '@/component/socket-listener/socket-listener';
+import { LayoutSocketListener } from '@/layout/socket-listener/socket-listener';
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
 
@@ -21,7 +21,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             <PersistGate loading={null} persistor={persistor}>
               <SnackbarProvider maxSnack={3} autoHideDuration={3000}>
                 <HeaderComp />
-                <SocketListener />
+                <LayoutSocketListener />
                 {children}
                 <Image src={'/bird_animation.gif'} alt="bird animation" width={300} height={200} className="birdAnimation" />
               </SnackbarProvider>

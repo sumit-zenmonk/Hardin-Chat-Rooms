@@ -3,10 +3,10 @@
 import { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks.ts";
 import { connectSocket, disconnectSocket, getSocket } from "@/service/socket";
-import { SocketEventNameEnum } from "@/component/socket-listener/socket-event.enum";
+import { SocketEventNameEnum } from "@/layout/socket-listener/socket-event.enum";
 import { addJoinedRoom, addMyRoom, removeJoinedRoom, removeMyRoom } from "@/redux/feature/room/room-slice";
 
-export const SocketListener = () => {
+export const LayoutSocketListener = () => {
     const dispatch = useAppDispatch();
     const { token } = useAppSelector((state) => state.authReducer);
 

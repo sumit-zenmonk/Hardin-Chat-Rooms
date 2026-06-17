@@ -49,22 +49,6 @@ export default function HeaderComp() {
                         </Button>
 
                         <Button
-                            onClick={() => {
-                                router.push("/dashboard/room")
-                            }}
-                        >
-                            Your Rooms
-                        </Button>
-
-                        <Button
-                            onClick={() => {
-                                router.push("/room")
-                            }}
-                        >
-                            Joined Rooms
-                        </Button>
-
-                        <Button
                             className={styles.logoutbtn}
                             onClick={async () => { await handleLogOut() }}
                         >

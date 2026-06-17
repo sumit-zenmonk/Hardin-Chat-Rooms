@@ -13,7 +13,7 @@ import type { Room } from "@/redux/feature/room/room-type";
 import DeleteIcon from '@mui/icons-material/Delete';
 import { useRouter } from "next/navigation";
 
-export default function Room() {
+export default function MyRoomComp() {
     const router = useRouter();
     const dispatch = useAppDispatch();
     const { myrooms, myRoomsTotalDocuments } = useAppSelector((state: RootState) => state.roomReducer);
