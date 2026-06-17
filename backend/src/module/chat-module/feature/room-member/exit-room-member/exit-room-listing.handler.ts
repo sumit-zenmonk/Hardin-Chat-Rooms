@@ -11,8 +11,8 @@ export class ExitRoomMemberService {
         private readonly socketService: SocketService,
     ) { }
 
-    async handle(req: Request, uuid: string) {
-        const isRoomMemberExists = await this.roomMemberRepository.findByUserUuidAndRoomUuid(req.user.uuid, uuid);
+    async handle(req: Request, room_uuid: string) {
+        const isRoomMemberExists = await this.roomMemberRepository.findByUserUuidAndRoomUuid(req.user.uuid, room_uuid);
         if (!isRoomMemberExists) {
             throw new BadRequestException("Member Not Found");
         }
@@ -20,13 +20,13 @@ export class ExitRoomMemberService {
         if (req.user.uuid !== isRoomMemberExists.user_uuid) {
             throw new BadRequestException("Not Allowed to remove other member");
         }
-        if (req.user.uuid === isRoomMemberExists.user_uuid) {
+        if (req.user.uuid === isRoomMemberExists.room.creator_uuid) {
             throw new BadRequestException("Creator can't be exit room");
         }
 
         await this.roomMemberRepository.deleteRoomMember(isRoomMemberExists.uuid);
 
-        await this.socketService.emitToUser(req.user.uuid, SocketEventNameEnum.ROOM_MEMBER_DELETED, { room_uuid: uuid });
+        await this.socketService.emitToUser(req.user.uuid, SocketEventNameEnum.ROOM_MEMBER_DELETED, { room_uuid: room_uuid });
         return;
     }
 }
