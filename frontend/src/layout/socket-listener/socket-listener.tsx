@@ -34,11 +34,16 @@ export const LayoutSocketListener = () => {
                 dispatch(removeJoinedRoom(data.room_uuid));
             });
 
+            socket.on(SocketEventNameEnum.ROOM_CHAT_CREATED, (data) => {
+                console.log(SocketEventNameEnum.ROOM_CHAT_CREATED, data);
+            });
+
             return () => {
                 socket.off(SocketEventNameEnum.ROOM_CREATED);
                 socket.off(SocketEventNameEnum.ROOM_DELETED);
                 socket.off(SocketEventNameEnum.ROOM_MEMBER_CREATED);
                 socket.off(SocketEventNameEnum.ROOM_MEMBER_DELETED);
+                socket.off(SocketEventNameEnum.ROOM_CHAT_CREATED);
                 disconnectSocket();
             };
         }
