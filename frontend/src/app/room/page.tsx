@@ -19,7 +19,7 @@ export default function Room() {
     const limit = Number(process.env.NEXT_PUBLIC_PAGE_LIMIT) || 10;
 
     useEffect(() => {
-        if (!fetchRooms.length) {
+        if (!joinedRooms.length) {
             dispatch(getJoinedRooms({ limit, offset: 0, })).unwrap();
         }
     }, []);

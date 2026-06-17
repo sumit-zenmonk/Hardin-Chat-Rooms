@@ -19,8 +19,8 @@ export default function Home() {
   const limit = Number(process.env.NEXT_PUBLIC_PAGE_LIMIT) || 10;
 
   useEffect(() => {
-    if (!fetchRooms.length) {
-       dispatch(getPublicRooms({ limit, offset: 0, })).unwrap();
+    if (!publicRooms.length) {
+      dispatch(getPublicRooms({ limit, offset: 0, })).unwrap();
     }
   }, []);
 

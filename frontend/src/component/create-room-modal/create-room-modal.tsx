@@ -33,13 +33,17 @@ export default function CreateRoomModal({ isOpen, onClose }: AddressModalProps) 
     });
 
     useEffect(() => {
-        if (isOpen) { };
-    }, [isOpen, dispatch]);
+        if (isOpen) {
+            reset();
+        };
+    }, [isOpen, reset]);
 
     const onSubmit = async (data: CreateRoomSchemaSchemaType) => {
         try {
             await dispatch(createRoom(data)).unwrap();
             reset();
+            onClose();
+            enqueueSnackbar("Room created successfully", { variant: "success" });
         } catch (error: any) {
             enqueueSnackbar(error, { variant: "error" });
             console.log(error);

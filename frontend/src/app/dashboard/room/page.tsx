@@ -20,7 +20,7 @@ export default function Room() {
     const limit = Number(process.env.NEXT_PUBLIC_PAGE_LIMIT) || 10;
 
     useEffect(() => {
-        if (!fetchRooms.length) {
+        if (!myrooms.length) {
             dispatch(getMyRooms({ limit, offset: 0, })).unwrap();
         }
     }, []);

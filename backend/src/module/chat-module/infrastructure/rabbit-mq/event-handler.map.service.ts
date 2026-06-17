@@ -15,7 +15,10 @@ export class EventHandlerMapService {
     // Map event names to handlers
     public eventHandlerMap: ChatEventHandlerMap = {
         'user.registered': [
-            (payload: UserRegisteredMQEventPayload) => this.handleUserRegister(payload),
+            async function handleUserRegister(payload: UserRegisteredMQEventPayload) {
+                // @ts-ignore
+                await this.handleUserRegister(payload);
+            },
         ]
     };
 
@@ -35,7 +38,7 @@ export class EventHandlerMapService {
                 this.logger.debug(`Duplicated event: ${eventName} in Chat Module`);
                 return;
             }
-            await handler(payload, outbox_uuid, eventName);
+            await handler.call(this, payload, outbox_uuid, eventName);
             await this.inboxRepository.createEntry({ outbox_uuid, event_name: eventName, handler_name: handler.name });
         }
     }

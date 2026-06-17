@@ -24,11 +24,11 @@ export interface CreateRoomPayload {
 }
 
 export interface RoomState {
-    myrooms: Room[] | [];
+    myrooms: Room[];
     myRoomsTotalDocuments: number;
-    publicRooms: Room[] | [];
+    publicRooms: Room[];
     publicRoomsTotalDocuments: number;
-    joinedRooms: Room[] | [];
+    joinedRooms: Room[];
     joinedRoomsTotalDocuments: number;
     loading: boolean;
     error: string | null;
