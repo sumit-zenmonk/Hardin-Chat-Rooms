@@ -3,7 +3,7 @@ import { DataSource, DataSourceOptions } from "typeorm";
 import 'dotenv/config';
 
 //Entities
-import { UserEntity } from "src/module/auth-module/domain/user/user.entity";
+import { UserEntity } from "src/module/user-module/domain/user/user.entity";
 import { OutboxEntity } from "../../domain/outbox/outbox.entity";
 
 const options: DataSourceOptions = {
@@ -18,7 +18,7 @@ const options: DataSourceOptions = {
     ],
     schema: process.env.DB_POSTGRES_USER_SCHEMA || 'user_schema',
     synchronize: false,
-    migrations: ['dist/module/auth-module/infrastructure/database/migrations/*{.ts,.js}'],
+    migrations: ['dist/module/user-module/infrastructure/database/migrations/*{.ts,.js}'],
 };
 
 const userDataSource = new DataSource(options);

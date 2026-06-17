@@ -14,11 +14,11 @@ import { RabbitMQCommonModule } from './common/infrastruture/rabbit-mq/rabbit-mq
 import { SocketModule } from './common/infrastruture/socket/socket.module';
 
 // User Module
-import { userDataSource } from './module/auth-module/infrastructure/database/data-source';
-import { UserRepository } from './module/auth-module/infrastructure/repository/user.repository';
-import { JwtHelperService } from './module/auth-module/infrastructure/services/jwt.service';
-import * as UserCronModule from './module/auth-module/infrastructure/cron/cron.module';
-import { UserModule } from './module/auth-module/feature/user/user.module';
+import { userDataSource } from './module/user-module/infrastructure/database/data-source';
+import { UserRepository } from './module/user-module/infrastructure/repository/user.repository';
+import { JwtHelperService } from './module/user-module/infrastructure/services/jwt.service';
+import * as UserCronModule from './module/user-module/infrastructure/cron/cron.module';
+import { UserModule } from './module/user-module/feature/user/user.module';
 
 // Room Module
 import { RoomRabbitMQModule } from './module/room-module/infrastructure/rabbit-mq/rabbit-mq.module';

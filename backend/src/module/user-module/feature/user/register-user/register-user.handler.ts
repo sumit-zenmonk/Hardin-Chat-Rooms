@@ -1,12 +1,12 @@
 import { BadRequestException, Injectable } from "@nestjs/common";
 import { RegisterUserDto } from "./register-user.dto";
 import type { Request } from "express";
-import { UserRepository } from "src/module/auth-module/infrastructure/repository/user.repository";
+import { UserRepository } from "src/module/user-module/infrastructure/repository/user.repository";
 import { BcryptService } from "src/common/infrastruture/services/bcrypt.service";
-import { JwtHelperService } from "src/module/auth-module/infrastructure/services/jwt.service";
-import { OutboxRepository } from "src/module/auth-module/infrastructure/repository/outbox.repository";
+import { JwtHelperService } from "src/module/user-module/infrastructure/services/jwt.service";
+import { OutboxRepository } from "src/module/user-module/infrastructure/repository/outbox.repository";
 import { Transactional } from "typeorm-transactional";
-import { UserPublishEventEnum } from "src/module/auth-module/domain/user/user.event";
+import { UserPublishEventEnum } from "src/module/user-module/domain/user/user.event";
 
 @Injectable()
 export class RegisterUserService {

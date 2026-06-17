@@ -1,7 +1,7 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { Cron, CronExpression } from '@nestjs/schedule';
 import { OutboxRepository } from '../../repository/outbox.repository';
-import { OutboxStatusEnum } from 'src/module/auth-module/domain/outbox/outbox.enum';
+import { OutboxStatusEnum } from 'src/module/user-module/domain/outbox/outbox.enum';
 import { RabbitMQService } from '../../rabbit-mq/rabbit-mq.service';
 import { runOnTransactionCommit, Transactional } from 'typeorm-transactional';
 
