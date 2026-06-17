@@ -39,9 +39,9 @@ export default function JoinedRoomComp() {
         }
     };
 
-    const handleRemoveMember = async (uuid: string) => {
+    const handleRemoveMember = async (room_uuid: string) => {
         try {
-            await dispatch(deleteRoomMember({ uuid })).unwrap();
+            await dispatch(deleteRoomMember({ room_uuid })).unwrap();
         } catch (error: any) {
             enqueueSnackbar(error, { variant: "error" });
             console.log(error);

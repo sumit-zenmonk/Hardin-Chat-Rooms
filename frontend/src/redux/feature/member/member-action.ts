@@ -41,14 +41,15 @@ export const createRoomMember = createAsyncThunk<
 );
 
 export const deleteRoomMember = createAsyncThunk<
-    { message: string; uuid: string },
-    { uuid: string },
+    { message: string; room_uuid: string, user_uuid: string },
+    { room_uuid: string },
     { state: RootState }
 >("delete/room/member", async (payload, { getState, rejectWithValue }) => {
     try {
         const token = getState().authReducer.token || "";
+        const user_uuid = getState().authReducer.user?.uuid || "";
 
-        const res = await fetch(`${BACKEND_URL}/api/v1/room/member/${payload.uuid}`, {
+        const res = await fetch(`${BACKEND_URL}/api/v1/room/member/${payload.room_uuid}`, {
             method: "DELETE",
             headers: {
                 "Content-Type": "application/json",
@@ -61,7 +62,7 @@ export const deleteRoomMember = createAsyncThunk<
             throw new Error(result.message);
         }
 
-        return { message: result.message, uuid: payload.uuid };
+        return { message: result.message, room_uuid: payload.room_uuid, user_uuid: user_uuid };
     } catch (err: any) {
         return rejectWithValue(err.message);
     }

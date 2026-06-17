@@ -17,8 +17,11 @@ export class DeleteRoomMemberService {
             throw new BadRequestException("Member Not Found");
         }
 
-        if (req.user.uuid != isRoomMemberExists.user_uuid) {
+        if (req.user.uuid !== isRoomMemberExists.user_uuid) {
             throw new BadRequestException("Not Allowed to remove other member");
+        }
+        if (req.user.uuid === isRoomMemberExists.user_uuid) {
+            throw new BadRequestException("Creator can't be exit room");
         }
 
         await this.roomMemberRepository.deleteRoomMember(isRoomMemberExists.uuid);

@@ -15,18 +15,22 @@ export const LayoutSocketListener = () => {
             const socket = connectSocket(token);
 
             socket.on(SocketEventNameEnum.ROOM_CREATED, (data) => {
+                console.log(SocketEventNameEnum.ROOM_CREATED, data);
                 dispatch(addMyRoom(data));
             });
 
             socket.on(SocketEventNameEnum.ROOM_DELETED, (data) => {
+                console.log(SocketEventNameEnum.ROOM_DELETED, data);
                 dispatch(removeMyRoom(data.uuid));
             });
 
             socket.on(SocketEventNameEnum.ROOM_MEMBER_CREATED, (data) => {
+                console.log(SocketEventNameEnum.ROOM_MEMBER_CREATED, data);
                 dispatch(addJoinedRoom(data));
             });
 
             socket.on(SocketEventNameEnum.ROOM_MEMBER_DELETED, (data) => {
+                console.log(SocketEventNameEnum.ROOM_MEMBER_DELETED, data);
                 dispatch(removeJoinedRoom(data.room_uuid));
             });
 

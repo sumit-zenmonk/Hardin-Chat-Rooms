@@ -28,7 +28,7 @@ export default function SpecificRoom() {
 
   const fetchRooms = async () => {
     try {
-      if (members.length >= total_members) return;
+      if (members?.length >= total_members) return;
 
       const newOffset = offset + limit;
       setOffset(newOffset);
@@ -38,16 +38,16 @@ export default function SpecificRoom() {
       console.log(error);
     }
   };
-  console.log(members);
+
   return (
     <Container maxWidth="xl" className={styles.container}>
       <Box className={styles.header}>
         <Typography variant="h4" className={styles.heading}>
-          specific Room
+          {members?.[0] ? members[0].room.name : "Specific Room Title"}
         </Typography>
 
         <Typography className={styles.subHeading}>
-          Infinite Scroll Room Members
+          {members?.[0] ? members[0].room.description : "Specific Room Description"}
         </Typography>
       </Box>
 
@@ -84,6 +84,7 @@ export default function SpecificRoom() {
                   <CardContent className={styles.cardContent}>
                     <Typography className={styles.roomMemberName}>{member.user.name}</Typography>
                     <Typography className={styles.email}>{member.user.email}</Typography>
+                    <Typography className={styles.role}>{member.role}</Typography>
                   </CardContent>
                 </Card>
               );

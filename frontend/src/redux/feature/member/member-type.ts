@@ -1,3 +1,5 @@
+import { RoomMemberRole } from "./room-member.enum";
+
 export interface Room {
     uuid: string;
     name: string;
@@ -23,6 +25,7 @@ export interface RoomMember {
     user_uuid: string;
     is_online: boolean;
     room: Room;
+    role: RoomMemberRole,
     user: User;
     created_at: string;
     updated_at: string;

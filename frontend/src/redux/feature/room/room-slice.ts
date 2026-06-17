@@ -67,7 +67,7 @@ const roomSlice = createSlice({
                 state.myRoomsTotalDocuments -= 1;
             })
             .addCase(deleteRoomMember.fulfilled, (state, action) => {
-                state.joinedRooms = state.joinedRooms.filter((room) => room.uuid !== action.payload.uuid);
+                state.joinedRooms = state.joinedRooms.filter((room) => room.uuid !== action.payload.room_uuid);
                 state.joinedRoomsTotalDocuments -= 1;
             })
             .addCase(getMyRooms.pending, (state) => {
