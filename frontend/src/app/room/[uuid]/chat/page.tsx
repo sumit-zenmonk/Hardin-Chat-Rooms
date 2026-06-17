@@ -12,16 +12,19 @@ import SendIcon from '@mui/icons-material/Send';
 import EmojiEmotionsIcon from '@mui/icons-material/EmojiEmotions';
 import { enqueueSnackbar } from "notistack";
 import dynamic from 'next/dynamic';
+import { createRoomChat } from "@/redux/feature/chat/chat-action";
 
 // Dynamically import the EmojiPicker to disable SSR
 const EmojiPicker = dynamic(() => import('emoji-picker-react'), { ssr: false });
 
-export default function SpecificRoom() {
+export default function SpecificRoomChat() {
   const dispatch = useAppDispatch();
   const { uuid } = useParams();
   const room_uuid = String(uuid);
   const { roomMembers } = useAppSelector((state: RootState) => state.roomMemberReducer);
+  const { user } = useAppSelector((state: RootState) => state.authReducer);
   const members = roomMembers?.[room_uuid];
+  const member = roomMembers?.[room_uuid]?.find((member) => member.user_uuid == user?.uuid);
   const [offset, setOffset] = useState(Number(process.env.NEXT_PUBLIC_PAGE_OFFSET) || 0);
   const limit = Number(process.env.NEXT_PUBLIC_PAGE_LIMIT) || 10;
   const [message, setMessage] = useState('');
@@ -38,12 +41,25 @@ export default function SpecificRoom() {
     setMessage((prev) => prev + emojiData.emoji);
   };
 
-  const handleSend = () => {
-    if (message.trim()) {
-      console.log(message);
-      enqueueSnackbar(message, { variant: "info" })
+  const handleSend = async () => {
+    try {
+      if (!message.trim()) {
+        return;
+      }
+      if (!member?.user_uuid) {
+        enqueueSnackbar("Login First", { variant: "info" });
+        return;
+      }
+
+      await dispatch(createRoomChat({ member_uuid: member?.uuid, msg: message, room_uuid })).unwrap();
+
+      enqueueSnackbar(message, { variant: "info" });
+
       setIsEmojiPickerOpen(false);
       setMessage('');
+    } catch (error: any) {
+      enqueueSnackbar(error, { variant: "error" });
+      console.log(error);
     }
   };
 

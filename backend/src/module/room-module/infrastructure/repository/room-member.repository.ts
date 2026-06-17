@@ -32,6 +32,10 @@ export class RoomMemberRepository extends Repository<RoomMemberEntity> {
                 user_uuid: user_uuid,
                 room_uuid: room_uuid
             },
+            relations: {
+                room: true,
+                user: true,
+            },
         });
         return member;
     }

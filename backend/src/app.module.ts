@@ -31,6 +31,7 @@ import { RoomMemberModule } from './module/room-module/feature/room-member/room.
 import { chatDataSource } from './module/chat-module/infrastructure/database/data-source';
 import { ChatRabbitMQModule } from './module/chat-module/infrastructure/rabbit-mq/rabbit-mq.module';
 import * as ChatCronModule from './module/chat-module/infrastructure/cron/cron.module';
+import { ChatModule } from './module/chat-module/feature/chat/chat.module';
 
 @Module({
   imports: [
@@ -100,6 +101,7 @@ import * as ChatCronModule from './module/chat-module/infrastructure/cron/cron.m
           options as DataSourceOptions,
         ),
     }),
+    ChatModule,
   ],
   controllers: [AppController],
   providers: [AppService, UserRepository, JwtHelperService],
