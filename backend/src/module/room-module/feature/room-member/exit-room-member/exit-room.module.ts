@@ -1,6 +1,6 @@
 import { Module } from "@nestjs/common";
-import { ExitRoomMemberController } from "./exit-room-listing.controller";
-import { ExitRoomMemberService } from "./exit-room-listing.handler";
+import { ExitRoomMemberController } from "./exit-room.controller";
+import { ExitRoomMemberService } from "./exit-room.handler";
 import { RoomMemberRepository } from "src/module/room-module/infrastructure/repository/room-member.repository";
 import { OutboxRepository } from "src/module/room-module/infrastructure/repository/outbox.repository";
 

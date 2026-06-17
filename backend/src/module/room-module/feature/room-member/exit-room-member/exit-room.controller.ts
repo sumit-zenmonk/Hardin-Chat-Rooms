@@ -1,5 +1,5 @@
 import { Body, Controller, Delete, Param, Req } from "@nestjs/common";
-import { ExitRoomMemberService } from "./exit-room-listing.handler";
+import { ExitRoomMemberService } from "./exit-room.handler";
 import type { Request } from "express";
 
 @Controller()

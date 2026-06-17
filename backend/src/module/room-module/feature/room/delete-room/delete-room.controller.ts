@@ -1,5 +1,5 @@
 import { Body, Controller, Delete, Param, Req } from "@nestjs/common";
-import { DeleteRoomService } from "./delete-room-listing.handler";
+import { DeleteRoomService } from "./delete-room.handler";
 import type { Request } from "express";
 
 @Controller()
