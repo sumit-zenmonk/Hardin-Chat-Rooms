@@ -1,7 +1,7 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { Cron, CronExpression } from '@nestjs/schedule';
 import { OutboxRepository } from '../../repository/outbox.repository';
-import { OutboxStatusEnum } from 'src/module/auth-module/domain/outbox/outbox.enum';
+import { OutboxStatusEnum } from 'src/module/chat-module/domain/outbox/outbox.enum';
 import { RabbitMQService } from '../../rabbit-mq/rabbit-mq.service';
 import { runOnTransactionCommit, Transactional } from 'typeorm-transactional';
 
@@ -16,7 +16,7 @@ export class OutboxEntryPublisherCronService {
 
     @Cron(process.env.USER_OUTBOX_CRON_TIMER || CronExpression.EVERY_5_SECONDS)
     @Transactional({
-        connectionName: process.env.DB_POSTGRES_USER_SCHEMA || 'user_schema',
+        connectionName: process.env.DB_POSTGRES_CHAT_SCHEMA || 'chat_schema',
     })
     async handleCron() {
         // fecth top pending enteries

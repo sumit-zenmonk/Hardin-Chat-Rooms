@@ -23,7 +23,6 @@ export interface RoomMember {
     uuid: string;
     room_uuid: string;
     user_uuid: string;
-    is_online: boolean;
     room: Room;
     role: RoomMemberRole,
     user: User;
