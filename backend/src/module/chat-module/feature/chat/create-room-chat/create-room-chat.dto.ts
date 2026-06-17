@@ -1,6 +1,6 @@
 import { IsOptional, IsString, IsUUID } from 'class-validator';
 
-export class CreateChatDto {
+export class CreateRoomChatDto {
     @IsUUID()
     member_uuid: string;
 

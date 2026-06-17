@@ -1,15 +1,15 @@
 import { Module } from "@nestjs/common";
 import { RoomRepository } from "src/module/room-module/infrastructure/repository/room.repository";
 import { RoomMemberRepository } from "src/module/room-module/infrastructure/repository/room-member.repository";
-import { CreateChatController } from "./create-chat.controller";
-import { CreateChatService } from "./create-chat.handler";
+import { CreateRoomChatController } from "./create-room-chat.controller";
+import { CreateRoomChatService } from "./create-room-chat.handler";
 import { RoomChatRepository } from "src/module/chat-module/infrastructure/repository/room-chat.repository";
 
 @Module({
     imports: [],
-    controllers: [CreateChatController],
-    providers: [CreateChatService, RoomRepository, RoomMemberRepository, RoomChatRepository],
+    controllers: [CreateRoomChatController],
+    providers: [CreateRoomChatService, RoomRepository, RoomMemberRepository, RoomChatRepository],
     exports: [],
 })
 
-export class CreateChatModule { }
+export class CreateRoomChatModule { }
