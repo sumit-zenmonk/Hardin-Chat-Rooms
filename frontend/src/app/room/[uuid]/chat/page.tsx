@@ -48,7 +48,7 @@ export default function SpecificRoomChat() {
         return;
       }
       if (!member?.user_uuid) {
-        enqueueSnackbar("Login First", { variant: "info" });
+        enqueueSnackbar("Not a member right now", { variant: "info" });
         return;
       }
 
@@ -104,39 +104,43 @@ export default function SpecificRoomChat() {
         )}
       </Box>
 
-      <Box className={styles.chatContainer}>
-        <Box sx={{ display: 'flex', gap: 1 }}>
+      {
+        member?.user_uuid
+        &&
+        <Box className={styles.chatContainer}>
+          <Box sx={{ display: 'flex', gap: 1 }}>
+            <IconButton
+              className={`${styles.actionButton} ${styles.sendButton}`}
+              size="small"
+              onClick={togglePicker}
+            >
+              <EmojiEmotionsIcon />
+            </IconButton>
+          </Box>
+
+          <Box className={styles.inputWrapper}>
+            <TextField
+              className={styles.inputField}
+              placeholder="Type a message"
+              variant="standard"
+              multiline
+              minRows={1}
+              maxRows={10}
+              value={message}
+              onChange={(e) => setMessage(e.target.value)}
+              onKeyDown={handleKeyPress}
+            />
+          </Box>
+
           <IconButton
-            className={`${styles.actionButton} ${styles.sendButton}`}
-            size="small"
-            onClick={togglePicker}
+            className={`${styles.actionButton} ${message.trim() ? styles.sendButton : ''}`}
+            onClick={handleSend}
+            disabled={!message.trim()}
           >
-            <EmojiEmotionsIcon />
+            <SendIcon fontSize="small" />
           </IconButton>
         </Box>
-
-        <Box className={styles.inputWrapper}>
-          <TextField
-            className={styles.inputField}
-            placeholder="Type a message"
-            variant="standard"
-            multiline
-            minRows={1}
-            maxRows={10}
-            value={message}
-            onChange={(e) => setMessage(e.target.value)}
-            onKeyDown={handleKeyPress}
-          />
-        </Box>
-
-        <IconButton
-          className={`${styles.actionButton} ${message.trim() ? styles.sendButton : ''}`}
-          onClick={handleSend}
-          disabled={!message.trim()}
-        >
-          <SendIcon fontSize="small" />
-        </IconButton>
-      </Box>
+      }
     </Container>
   );
 }
