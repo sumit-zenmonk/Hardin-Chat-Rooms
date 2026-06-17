@@ -8,6 +8,7 @@ import { InboxRepository } from '../repository/inbox.repository';
 import { CreateRoomService } from '../../feature/room/create-room/create-room.handler';
 import { RoomRepository } from '../repository/room.repository';
 import { RoomMemberRepository } from '../repository/room-member.repository';
+import { DeleteRoomService } from '../../feature/room/delete-room/delete-room.handler';
 
 @Module({
     providers: [
@@ -20,6 +21,7 @@ import { RoomMemberRepository } from '../repository/room-member.repository';
         CreateRoomService,
         RoomRepository,
         RoomMemberRepository,
+        DeleteRoomService,
     ],
     exports: [RabbitMQService, ProcessorsService],
 })
