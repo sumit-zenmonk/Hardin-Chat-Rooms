@@ -122,7 +122,7 @@ export default function SpecificRoomChat() {
             variant="standard"
             multiline
             minRows={1}
-            maxRows={4}
+            maxRows={10}
             value={message}
             onChange={(e) => setMessage(e.target.value)}
             onKeyDown={handleKeyPress}
