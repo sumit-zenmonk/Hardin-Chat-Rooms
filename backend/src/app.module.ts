@@ -23,12 +23,14 @@ import { UserModule } from './module/auth-module/feature/user/user.module';
 // Room Module
 import { RoomRabbitMQModule } from './module/room-module/infrastructure/rabbit-mq/rabbit-mq.module';
 import { roomDataSource } from './module/room-module/infrastructure/database/data-source';
+import * as RoomCronModule from './module/room-module/infrastructure/cron/cron.module';
 import { RoomModule } from './module/room-module/feature/room/room.module';
 import { RoomMemberModule } from './module/room-module/feature/room-member/room.module';
 
 // Chat Module
 import { chatDataSource } from './module/chat-module/infrastructure/database/data-source';
 import { ChatRabbitMQModule } from './module/chat-module/infrastructure/rabbit-mq/rabbit-mq.module';
+import * as ChatCronModule from './module/chat-module/infrastructure/cron/cron.module';
 
 @Module({
   imports: [
@@ -65,6 +67,7 @@ import { ChatRabbitMQModule } from './module/chat-module/infrastructure/rabbit-m
 
     // Room Module
     RoomRabbitMQModule,
+    RoomCronModule.CronModule,
     TypeOrmModule.forRootAsync({
       name: process.env.DB_POSTGRES_ROOM_SCHEMA || 'room_schema',
       useFactory: () => ({
@@ -83,6 +86,7 @@ import { ChatRabbitMQModule } from './module/chat-module/infrastructure/rabbit-m
 
     // Chat Module
     ChatRabbitMQModule,
+    ChatCronModule.CronModule,
     TypeOrmModule.forRootAsync({
       name: process.env.DB_POSTGRES_CHAT_SCHEMA || 'chat_schema',
       useFactory: () => ({
