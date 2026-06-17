@@ -60,6 +60,8 @@
   border-radius: 12px;
   overflow: hidden;
   display: flex;
+  padding: 1.5%;
+  gap: 2%;
   flex-direction: column;
   background: white;
   transition: transform 0.2s;
