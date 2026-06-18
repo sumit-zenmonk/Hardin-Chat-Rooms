@@ -12,6 +12,7 @@ export interface RoomChat {
         user_uuid: string;
         room_uuid: string;
         role: string;
+        is_writer: boolean;
     };
     room: {
         uuid: string;

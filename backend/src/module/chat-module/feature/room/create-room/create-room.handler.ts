@@ -14,7 +14,14 @@ export class CreateRoomService {
 
     async handle(body: RoomCreatedMQEventPayload) {
         const newRoom = await this.roomRepository.createRoom({ ...body });
-        await this.roomMemberRepository.createRoomMember({ role: RoomMemberRole.CREATOR, room_uuid: newRoom.uuid, user_uuid: body.creator_uuid });
+        await this.roomMemberRepository.createRoomMember(
+            {
+                role: RoomMemberRole.CREATOR,
+                room_uuid: newRoom.uuid,
+                user_uuid: body.creator_uuid,
+                is_writer: true
+            }
+        );
         return;
     }
 }
