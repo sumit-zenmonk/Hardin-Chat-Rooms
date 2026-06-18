@@ -87,7 +87,8 @@ export default function SpecificRoomChat() {
 
   const handleSend = async () => {
     try {
-      if (!message.trim()) {
+      if (!message.trim() || message.length > 2000) {
+        enqueueSnackbar("message length should be 0-2000", { variant: "warning" });
         return;
       }
       if (!member?.uuid) {
@@ -211,7 +212,6 @@ export default function SpecificRoomChat() {
             <IconButton
               className={`${styles.actionButton} ${(message.trim() && message.length <= 2000) ? styles.sendButton : ''}`}
               onClick={handleSend}
-              disabled={!message.trim() || message.length > 2000}
             >
               <SendIcon fontSize="small" />
             </IconButton>
