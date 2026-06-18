@@ -69,10 +69,10 @@ export type ChatEventPayloadMap = {
 export type ChatEventPayload = ChatEventPayloadMap[keyof ChatEventPayloadMap];
 
 // 1. Define the Handler Function Type
-export type EventHandlerFunction<T extends keyof ChatEventPayloadMap> =
-    (payload: ChatEventPayloadMap[T]) => Promise<void>;
+export type EventHandlerFunction<K extends keyof ChatEventPayloadMap> =
+    (payload: ChatEventPayloadMap[K], outbox_uuid: string, event_name: string) => Promise<void>;
 
 // 2. Map of exact handler signatures
 export type ChatEventHandlerMap = {
-    [K in keyof ChatEventPayloadMap]: EventHandlerFunction<K>[];
+    [K in keyof ChatEventPayloadMap]?: EventHandlerFunction<K>[];
 };

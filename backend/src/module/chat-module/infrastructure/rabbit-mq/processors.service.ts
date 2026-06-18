@@ -1,5 +1,5 @@
 import { Injectable, Logger } from '@nestjs/common';
-import { ChatEventHandlerMap, RoomCreatedMQEventPayload, RoomDeletedMQEventPayload, RoomMemberCreatedMQEventPayload, RoomMemberDeletedMQEventPayload, UserRegisteredMQEventPayload } from './rabbit-mq.type';
+import { ChatEventHandlerMap, ChatEventPayloadMap, RoomCreatedMQEventPayload, RoomDeletedMQEventPayload, RoomMemberCreatedMQEventPayload, RoomMemberDeletedMQEventPayload, UserRegisteredMQEventPayload } from './rabbit-mq.type';
 import { RegisterUserService } from 'src/module/chat-module/feature/user/register-user/register-user.handler';
 import { InboxRepository } from '../repository/inbox.repository';
 import { Transactional } from 'typeorm-transactional';
@@ -22,56 +22,40 @@ export class ProcessorsService {
 
     // Map event names to handlers
     public eventHandlerMap: ChatEventHandlerMap = {
-        'user.registered': [
-            async function handleUserRegister(payload: UserRegisteredMQEventPayload) {
-                // @ts-ignore
-                await this.handleUserRegister(payload);
-            },
-        ],
-        'room.created': [
-            async function handleRoomCreated(payload: RoomCreatedMQEventPayload) {
-                // @ts-ignore
-                await this.handleRoomCreated(payload);
-            },
-        ],
-        'room.deleted': [
-            async function handleRoomDeleted(payload: RoomDeletedMQEventPayload) {
-                // @ts-ignore
-                await this.handleRoomDeleted(payload);
-            },
-        ],
-        'room.member.created': [
-            async function handleRoomMemberCreated(payload: RoomMemberCreatedMQEventPayload) {
-                // @ts-ignore
-                await this.handleRoomMemberCreated(payload);
-            },
-        ],
-        'room.member.deleted': [
-            async function handleRoomMemberDeleted(payload: RoomMemberDeletedMQEventPayload) {
-                // @ts-ignore
-                await this.handleRoomMemberDeleted(payload);
-            },
-        ],
+        'user.registered': [this.handleUserRegister],
+        'room.created': [this.handleRoomCreated],
+        'room.deleted': [this.handleRoomDeleted],
+        'room.member.created': [this.handleRoomMemberCreated],
+        'room.member.deleted': [this.handleRoomMemberDeleted],
     };
 
     @Transactional({
         connectionName: process.env.DB_POSTGRES_CHAT_SCHEMA || 'chat_schema',
     })
     async executeHandler(eventName: string, payload: any, outbox_uuid: string) {
-        const handlers = this.eventHandlerMap[eventName];
+        const handlers = this.eventHandlerMap[eventName as keyof ChatEventPayloadMap];
         if (!handlers || !handlers.length) {
             this.logger.debug(`No handler found for event: ${eventName} in Chat Module`);
             return;
         }
 
         for (const handler of handlers) {
-            const alreadyProcessed = await this.inboxRepository.findByOutboxUuidAndHandlerName(outbox_uuid, handler.name);
+            const handlerName = handler.name;
+            const alreadyProcessed = await this.inboxRepository.findByOutboxUuidAndHandlerName(outbox_uuid, handlerName);
             if (alreadyProcessed) {
-                this.logger.debug(`Duplicated event: ${eventName} in Chat Module`);
-                return;
+                this.logger.debug(`Duplicated event: ${eventName} with handler: ${handlerName} in Chat Module`);
+                continue;
             }
+
+            // Execute the handler
             await handler.call(this, payload, outbox_uuid, eventName);
-            await this.inboxRepository.createEntry({ outbox_uuid, event_name: eventName, handler_name: handler.name });
+
+            // Record successful processing in the inbox
+            await this.inboxRepository.createEntry({
+                outbox_uuid,
+                event_name: eventName,
+                handler_name: handlerName
+            });
         }
     }
 

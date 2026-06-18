@@ -40,7 +40,7 @@ export class RoomChatRepository extends Repository<RoomChatEntity> {
                 room: true,
             },
             order: {
-                created_at: 'DESC'
+                created_at: 'ASC'
             },
             skip: offset || Number(process.env.page_offset) || 0,
             take: limit || Number(process.env.page_limit) || 10

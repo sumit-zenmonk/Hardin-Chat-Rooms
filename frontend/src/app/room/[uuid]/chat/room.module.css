@@ -116,3 +116,73 @@
 .sendButton:hover {
     background-color: #00a884;
 }
+
+.chatMessage {
+    width: 100%;
+    display: flex;
+    margin-bottom: 8px;
+    padding: 0 16px;
+}
+
+.myMessage {
+    justify-content: flex-end;
+}
+
+.otherMessage {
+    justify-content: flex-start;
+}
+
+.messageContent {
+    max-width: 70%;
+    padding: 8px 12px;
+    border-radius: 8px;
+    position: relative;
+    box-shadow: 0 1px 1px rgba(0,0,0,0.1);
+}
+
+.myMessage .messageContent {
+    background-color: #dcf8c6;
+    border-top-right-radius: 0;
+}
+
+.otherMessage .messageContent {
+    background-color: #ffffff;
+    border-top-left-radius: 0;
+}
+
+.senderName {
+    display: block;
+    font-weight: bold;
+    font-size: 0.75rem;
+    margin-bottom: 4px;
+    color: #075e54;
+}
+
+.messageText {
+    word-break: break-word;
+    font-size: 0.95rem;
+    line-height: 1.4;
+}
+
+.messageFooter {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 4px;
+    margin-top: 4px;
+}
+
+.messageTime {
+    color: #667781;
+    font-size: 0.7rem;
+}
+
+.deleteBtn {
+    padding: 2px !important;
+    opacity: 0.5;
+}
+
+.deleteBtn:hover {
+    opacity: 1;
+    color: #ef4444;
+}

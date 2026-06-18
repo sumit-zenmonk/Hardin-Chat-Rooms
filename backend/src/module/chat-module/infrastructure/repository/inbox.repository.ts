@@ -17,11 +17,11 @@ export class InboxRepository extends Repository<InboxEntity> {
         return await this.save(entry);
     }
 
-    async findByOutboxUuidAndHandlerName(outbox_uuid: string, hander: string) {
+    async findByOutboxUuidAndHandlerName(outbox_uuid: string, handler: string) {
         const entry = await this.findOne({
             where: {
                 outbox_uuid: outbox_uuid,
-                handler_name: hander,
+                handler_name: handler,
             }
         });
         return entry;

@@ -13,7 +13,7 @@ export class DeleteRoomChatService {
         if (!isRoomChatExists) {
             throw new BadRequestException("Room Chat Not Found");
         }
-        if (isRoomChatExists.member.user_uuid == req.user.uuid) {
+        if (isRoomChatExists.member.user_uuid !== req.user.uuid) {
             throw new BadRequestException("Can't delete other's chat");
         }
 

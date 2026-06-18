@@ -8,6 +8,7 @@ import storage from "redux-persist/lib/storage";
 import authReducer from "../feature/auth/auth-slice";
 import roomReducer from "../feature/room/room-slice";
 import roomMemberReducer from "../feature/member/member-slice";
+import chatReducer from "../feature/chat/chat-slice";
 
 const persistConfig = {
     key: "root",
@@ -18,6 +19,7 @@ const appReducer = combineReducers({
     authReducer: authReducer,
     roomReducer: roomReducer,
     roomMemberReducer: roomMemberReducer,
+    chatReducer:chatReducer,
 });
 
 const rootReducer = (state: any, action: any) => {

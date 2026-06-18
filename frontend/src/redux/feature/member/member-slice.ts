@@ -16,8 +16,17 @@ const roomSlice = createSlice({
     initialState,
     reducers: {
         resetRoomError: (state) => {
-            state = initialState
+            state.error = null;
         },
+        updateMemberOnlineStatus: (state, action) => {
+            const { room_uuid, user_uuid, is_online } = action.payload;
+            if (state.roomMembers[room_uuid]) {
+                const memberIndex = state.roomMembers[room_uuid].findIndex(m => m.user_uuid === user_uuid);
+                if (memberIndex !== -1) {
+                    state.roomMembers[room_uuid][memberIndex].is_online = is_online;
+                }
+            }
+        }
     },
     extraReducers: (builder) => {
         builder
@@ -64,5 +73,5 @@ const roomSlice = createSlice({
     },
 });
 
-export const { resetRoomError } = roomSlice.actions;
+export const { resetRoomError, updateMemberOnlineStatus } = roomSlice.actions;
 export default roomSlice.reducer;
