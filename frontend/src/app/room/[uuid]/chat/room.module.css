@@ -133,7 +133,7 @@
 }
 
 .myMessage .messageContent {
-    background-color: #98d6ff;
+    background-color: #ffffff;
     border-top-right-radius: 0;
 }
 
@@ -142,12 +142,12 @@
     border-top-left-radius: 0;
 }
 
-.senderName {
+.senderEmail {
     display: block;
-    font-weight: bold;
-    font-size: 0.75rem;
-    margin-bottom: 4px;
-    color: #07435e;
+    font-weight: 700;
+    font-size: 1rem;
+    margin-bottom: 1%;
+    color: #006ea1;
 }
 
 .messageText {

@@ -144,29 +144,33 @@ export default function SpecificRoomChat() {
           scrollableTarget="scrollableDiv"
         >
           <Box className={styles.roomChatWrapper}>
-            {chats.map((chat: RoomChat) => (
-              <Box
-                key={chat.uuid}
-                className={`${styles.chatMessage} ${chat.member?.user_uuid === user?.uuid ? styles.myMessage : styles.otherMessage}`}
-              >
-                <Box className={styles.messageContent}>
-                  <Typography variant="caption" className={styles.senderName}>
-                    {chat.member?.user_uuid === user?.uuid ? 'You' : `User ${chat.member?.user_uuid.slice(0, 4)}`}
-                  </Typography>
-                  <Typography className={styles.messageText}>{chat.message}</Typography>
-                  <Box className={styles.messageFooter}>
-                    <Typography variant="caption" className={styles.messageTime}>
-                      {new Date(chat.created_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+            {chats.map((chat: RoomChat) => {
+              const member = members.find((member) => member.user_uuid == chat.member?.user_uuid);
+
+              return (
+                <Box
+                  key={chat.uuid}
+                  className={`${styles.chatMessage} ${chat.member?.user_uuid === user?.uuid ? styles.myMessage : styles.otherMessage}`}
+                >
+                  <Box className={styles.messageContent}>
+                    <Typography variant="caption" className={styles.senderEmail}>
+                      {member ? member.user.email : 'N/A'}
                     </Typography>
-                    {chat.member?.user_uuid === user?.uuid && (
-                      <IconButton size="small" onClick={() => handleDeleteChat(chat.uuid)} className={styles.deleteBtn}>
-                        <DeleteIcon fontSize="inherit" />
-                      </IconButton>
-                    )}
+                    <Typography className={styles.messageText}>{chat.message}</Typography>
+                    <Box className={styles.messageFooter}>
+                      <Typography variant="caption" className={styles.messageTime}>
+                        {new Date(chat.created_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                      </Typography>
+                      {chat.member?.user_uuid === user?.uuid && (
+                        <IconButton size="small" onClick={() => handleDeleteChat(chat.uuid)} className={styles.deleteBtn}>
+                          <DeleteIcon fontSize="inherit" />
+                        </IconButton>
+                      )}
+                    </Box>
                   </Box>
                 </Box>
-              </Box>
-            ))}
+              );
+            })}
           </Box>
         </InfiniteScroll>
       </Box>
