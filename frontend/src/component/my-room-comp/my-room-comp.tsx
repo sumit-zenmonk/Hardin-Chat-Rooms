@@ -2,6 +2,7 @@
 
 import { Box, Button, Card, CardContent, CircularProgress, Container, Typography } from "@mui/material";
 import styles from "./room.module.css";
+import bannerStyles from "../../app/banner.module.css";
 import { useEffect, useState } from "react";
 import CreateRoomModal from "@/component/create-room-modal/create-room-modal";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks.ts";
@@ -40,7 +41,7 @@ export default function MyRoomComp() {
         }
     };
 
-    const handleAddAddressClose = () => {
+    const handleAddRoomClose = () => {
         setOpenCreateRoomModal(false);
     };
 
@@ -88,6 +89,7 @@ export default function MyRoomComp() {
                                     className={styles.card}
                                     elevation={2}
                                 >
+                                    <Box className={bannerStyles.banner} />
                                     <CardContent className={styles.cardContent}
                                     >
                                         <Typography className={styles.roomName}>{room.name}</Typography>
@@ -114,7 +116,7 @@ export default function MyRoomComp() {
                 </InfiniteScroll>
             </Box>
 
-            <CreateRoomModal isOpen={openCreateRoomModal} onClose={handleAddAddressClose} />
+            <CreateRoomModal isOpen={openCreateRoomModal} onClose={handleAddRoomClose} />
         </Container>
     );
 }

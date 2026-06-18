@@ -2,6 +2,7 @@
 
 import { Avatar, Box, Button, Card, CardContent, CircularProgress, Container, Typography } from "@mui/material";
 import styles from "./home.module.css";
+import bannerStyles from "./banner.module.css";
 import { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks.ts";
 import { enqueueSnackbar } from "notistack";
@@ -79,6 +80,7 @@ export default function Home() {
                   className={styles.card}
                   elevation={2}
                 >
+                  <Box className={bannerStyles.banner} />
                   <CardContent className={styles.cardContent}>
                     <Typography className={styles.roomName}>{room.name}</Typography>
                     <Typography className={styles.description}>{room.description}</Typography>

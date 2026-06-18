@@ -113,6 +113,7 @@
     display: flex;
     margin-bottom: 8px;
     padding: 0 16px;
+    position: relative;
 }
 
 .myMessage {
@@ -124,7 +125,7 @@
 }
 
 .messageContent {
-    min-width: 10%;
+    min-width: 20%;
     max-width: 70%;
     padding: 8px 12px;
     border-radius: 8px;
@@ -172,6 +173,10 @@
 .deleteBtn {
     padding: 2px;
     opacity: 0.5;
+    color: #ef4444;
+    position: absolute;
+    top: 10;
+    right: 10;
 }
 
 .deleteBtn:hover {

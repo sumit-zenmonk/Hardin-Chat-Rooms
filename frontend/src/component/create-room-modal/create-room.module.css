@@ -41,7 +41,7 @@
     gap: 15px;
 }
 
-.addressList {
+.roomList {
     display: flex;
     flex-direction: column;
     gap: 10px;
@@ -71,12 +71,12 @@
     gap: 10px;
 }
 
-.deleteAddress,
+.deleteRoom,
 .closebtn {
     color: rgb(231, 0, 0);
 }
 
-.deleteAddress:hover,
+.deleteRoom:hover,
 .closebtn:hover {
     background-color: rgb(194, 0, 0);
 }

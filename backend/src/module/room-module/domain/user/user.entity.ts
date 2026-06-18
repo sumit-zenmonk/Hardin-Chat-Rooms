@@ -13,6 +13,9 @@ export class UserEntity {
     @Column({ type: "varchar", nullable: false, unique: true })
     email: string;
 
+    @Column({ type: "varchar", nullable: true })
+    image_url: string;
+
     @OneToMany(() => RoomMemberEntity, (member) => member.user)
     member: RoomMemberEntity[];
 

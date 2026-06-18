@@ -2,6 +2,7 @@
 
 import { Avatar, Box, Button, Card, CardContent, CircularProgress, Container, Modal, Typography } from "@mui/material";
 import styles from "./room.module.css";
+import bannerStyles from "../../banner.module.css";
 import { useEffect, useMemo, useState } from "react";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks.ts";
 import { getRoomMembers } from "@/redux/feature/member/member-action";
@@ -51,7 +52,7 @@ export default function SpecificRoom() {
     <Container maxWidth="xl" className={styles.container}>
       <Box className={styles.header}>
         <Typography variant="h4" className={styles.heading}>
-          {members?.[0] ? members[0].room.name : "Specific Room Title"}
+          {members?.[0] ? members[0].room.name : "Specific Room"}'s Members
         </Typography>
 
         <Typography className={styles.subHeading}>
@@ -91,6 +92,7 @@ export default function SpecificRoom() {
                   className={styles.card}
                   elevation={2}
                 >
+                  <Box className={bannerStyles.banner} />
                   <Avatar>
                     {member.user.name ? member.user.name.charAt(0).toUpperCase() : '?'}
                   </Avatar>

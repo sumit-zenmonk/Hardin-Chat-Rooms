@@ -11,12 +11,12 @@ import { CreateRoomSchema, CreateRoomSchemaSchemaType } from "@/schemas/create-r
 import { createRoom } from "@/redux/feature/room/room-action";
 import { enqueueSnackbar } from "notistack";
 
-interface AddressModalProps {
+interface RoomModalProps {
     isOpen: boolean;
     onClose: () => void;
 }
 
-export default function CreateRoomModal({ isOpen, onClose }: AddressModalProps) {
+export default function CreateRoomModal({ isOpen, onClose }: RoomModalProps) {
     const dispatch = useAppDispatch();
 
     const {
@@ -55,7 +55,7 @@ export default function CreateRoomModal({ isOpen, onClose }: AddressModalProps) 
             <Box className={styles.modalContainer}>
                 <Box className={styles.header}>
                     <Typography variant="h6">
-                        Add Address
+                        Add Room
                     </Typography>
                 </Box>
 
@@ -85,7 +85,7 @@ export default function CreateRoomModal({ isOpen, onClose }: AddressModalProps) 
                     // disabled={loading}
                     // startIcon={loading && <CircularProgress size={20} />}
                     >
-                        Add Address
+                        Add Room
                     </Button>
                 </form>
 
