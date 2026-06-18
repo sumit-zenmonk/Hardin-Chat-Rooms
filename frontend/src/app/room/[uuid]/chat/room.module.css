@@ -1,22 +1,25 @@
 .container {
-    width: 100%;
-    height: 93%;
+    width: 60%;
+    height: 90%;
     padding-top: 1%;
-    padding-bottom: 1%;
+    /* padding-bottom: 1%; */
     display: flex;
     flex-direction: column;
+    justify-content: center;
+    align-items: center;
     border-left: 1px solid #c4c4c4;
     border-right: 1px solid #c4c4c4;
     border-bottom: 1px solid #c4c4c4;
     box-shadow: 0 12 0 15px rgba(0, 0, 0, 0.05);
     background-color: #ffffff;
+    border-radius: 10px;
+    margin: auto;
     position: relative;
 }
 
 .header {
     width: 100%;
-    padding-bottom: .5%;
-    padding-top: 1%;
+    padding: 1%;
     border-bottom: 1px solid #c4c4c4;
     margin-bottom: 1%;
 }
@@ -31,10 +34,11 @@
 }
 
 .scrollWrapper {
-    width: 100%;
+    width: 90%;
     height: 100%;
     overflow: auto;
     padding-right: 1%;
+    padding-bottom: 1%;
     border-radius: 16px;
     background-color: #f0f2f5;
 }
@@ -75,16 +79,16 @@
 
 .chatContainer {
     position: absolute;
-    width: 50%;
+    width: 70%;
     bottom: .5%;
-    left: 25%;
+    left: 17%;
     display: flex;
     align-items: flex-end;
     gap: 12px;
     padding: 10px 16px;
     background-color: #ffffff;
     border: 1px solid #00aaff;
-    border-radius: 16px;
+    border-radius: 50px;
 }
 
 .inputWrapper {
@@ -125,7 +129,7 @@
 }
 
 .messageContent {
-    min-width: 20%;
+    min-width: 30%;
     max-width: 70%;
     padding: 8px 12px;
     border-radius: 8px;
@@ -134,7 +138,7 @@
 }
 
 .myMessage .messageContent {
-    background-color: #ffffff;
+    background-color: #d6f2ff;
     border-top-right-radius: 0;
 }
 
@@ -143,22 +147,29 @@
     border-top-left-radius: 0;
 }
 
+.myEmail,
 .senderEmail {
     display: block;
-    font-weight: 700;
+    font-weight: 900;
     font-size: 1rem;
     margin-bottom: 1%;
-    color: #006ea1;
+    color: #0095ff;
 }
 
+.myEmail,
 .senderEmail:hover {
     cursor: pointer;
+}
+
+.myEmail {
+    color: #000c93;
 }
 
 .messageText {
     word-break: break-word;
     font-size: 0.95rem;
-    line-height: 1.4;
+    /* line-height: 1.4; */
+    padding: .5% 3%;
 }
 
 .messageFooter {
