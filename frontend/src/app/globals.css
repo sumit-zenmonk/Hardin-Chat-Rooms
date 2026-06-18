@@ -47,9 +47,9 @@ button,
 }
 
 button:hover {
-  /* background: rgb(255, 255, 255); */
+  color: #0097ee;
   box-shadow: 0 0 0 2px rgb(194, 194, 194);
-  /* color: #fff; */
+  background-color: #fff;
   transform: scale(1.03);
 }
 

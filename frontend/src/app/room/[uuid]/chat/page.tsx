@@ -140,9 +140,8 @@ export default function SpecificRoomChat() {
           hasMore={chats.length < totalChats}
           loader={<Box className={styles.loader}><CircularProgress size={30} /></Box>}
           inverse={true}
-          endMessage={<Typography className={styles.endMessage}>Yay! You have seen it all</Typography>}
+          // endMessage={<Typography className={styles.endMessage}>Yay! You have seen it all</Typography>}
           scrollableTarget="scrollableDiv"
-          style={{ display: 'flex', flexDirection: 'column-reverse' }}
         >
           <Box className={styles.roomChatWrapper}>
             {chats.map((chat: RoomChat) => (
