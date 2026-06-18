@@ -2,7 +2,7 @@ import { io, Socket } from "socket.io-client"
 
 let auth_socket: Socket | null = null
 let unauth_socket: Socket | null = null
-const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:3000";
+const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:8090";
 
 export const connectAuthSocket = (token: string): Socket => {
     auth_socket = io(BACKEND_URL, {

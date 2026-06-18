@@ -4,7 +4,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import { RootState } from "@/redux/store";
 import { CreateRoomMemberPayload, RoomMember } from "./member-type";
 
-const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL;
+const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:8090";
 const LIMIT = Number(process.env.NEXT_PUBLIC_PAGE_LIMIT) || 10;
 const OFFSET = Number(process.env.NEXT_PUBLIC_PAGE_OFFSET) || 0;
 
