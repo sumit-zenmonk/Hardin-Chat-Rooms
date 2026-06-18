@@ -122,7 +122,7 @@ export default function SpecificRoomChat() {
   };
 
   return (
-    <Container maxWidth="xl" className={styles.container}>
+    <Container className={styles.container}>
       <Box className={styles.header}>
         <Typography variant="h4" className={styles.heading}>
           {members?.[0]?.room?.name || "Specific Room Title"} Chat's

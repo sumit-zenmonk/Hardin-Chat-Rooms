@@ -56,7 +56,7 @@ export default function MyRoomComp() {
     };
 
     return (
-        <Container maxWidth="xl" className={styles.container}>
+        <Box className={styles.container}>
             <Box className={styles.header}>
                 <Typography variant="h4" className={styles.heading}>
                     Your Rooms Listing
@@ -117,6 +117,6 @@ export default function MyRoomComp() {
             </Box>
 
             <CreateRoomModal isOpen={openCreateRoomModal} onClose={handleAddRoomClose} />
-        </Container>
+        </Box>
     );
 }

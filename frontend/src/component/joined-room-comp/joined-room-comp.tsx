@@ -51,7 +51,7 @@ export default function JoinedRoomComp() {
     };
 
     return (
-        <Container maxWidth="xl" className={styles.container}>
+        <Box className={styles.container}>
             <Box className={styles.header}>
                 <Typography variant="h4" className={styles.heading}>
                     Joined Rooms Listing
@@ -105,6 +105,6 @@ export default function JoinedRoomComp() {
                 </InfiniteScroll>
             </Box>
 
-        </Container>
+        </Box>
     );
 }

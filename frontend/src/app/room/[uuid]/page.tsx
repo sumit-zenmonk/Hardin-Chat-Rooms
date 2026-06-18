@@ -50,7 +50,7 @@ export default function SpecificRoom() {
   };
 
   return (
-    <Container maxWidth="xl" className={styles.container}>
+    <Box className={styles.container}>
       <Box className={styles.header}>
         <Typography variant="h4" className={styles.heading}>
           {members?.[0] ? members[0].room.name : "Specific Room"}'s Members
@@ -111,6 +111,6 @@ export default function SpecificRoom() {
       </Box>
 
       <LinkShareComp open={isLinkOpen} onClose={() => setIsLinkOpen(false)} data={{ shareUrl: shareUrl, title: title }} />
-    </Container>
+    </Box>
   );
 }

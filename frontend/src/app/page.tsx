@@ -52,7 +52,7 @@ export default function Home() {
   };
 
   return (
-    <Container maxWidth="xl" className={styles.container}>
+    <Box className={styles.container}>
       <Box className={styles.header}>
         <Typography variant="h4" className={styles.heading}>
           Public Rooms Listing
@@ -111,6 +111,6 @@ export default function Home() {
         </InfiniteScroll>
       </Box>
 
-    </Container>
+    </Box>
   );
 }
