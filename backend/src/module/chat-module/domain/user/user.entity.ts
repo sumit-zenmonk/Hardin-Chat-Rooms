@@ -11,9 +11,6 @@ export class UserEntity {
     @Column({ type: "varchar", nullable: false, unique: true })
     email: string;
 
-    @Column({ type: "bool", default: false })
-    is_online: boolean;
-
     @CreateDateColumn()
     created_at: Date;
 
