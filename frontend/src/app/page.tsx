@@ -85,25 +85,25 @@ export default function Home() {
                   <CardContent className={styles.cardContent}>
                     <Typography className={styles.roomName}>{room.name}</Typography>
                     <Typography className={styles.description}>{room.description}</Typography>
-                  </CardContent>
 
-                  {
-                    user &&
+                    {
+                      user &&
+                      <Button
+                        onClick={() => handleJoin(room.uuid)}
+                        disabled={!!isJoined}
+                      >
+                        {
+                          !isJoined ?
+                            'Join' : 'Already joined'
+                        }
+                      </Button>
+                    }
                     <Button
-                      onClick={() => handleJoin(room.uuid)}
-                      disabled={!!isJoined}
+                      onClick={() => router.push(`/room/${room.uuid}`)}
                     >
-                      {
-                        !isJoined ?
-                          'Join' : 'Already joined'
-                      }
+                      View Room
                     </Button>
-                  }
-                  <Button
-                    onClick={() => router.push(`/room/${room.uuid}`)}
-                  >
-                    View Room
-                  </Button>
+                  </CardContent>
                 </Card>
               );
             })}

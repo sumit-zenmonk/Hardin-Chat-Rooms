@@ -83,21 +83,21 @@ export default function JoinedRoomComp() {
                                     <CardContent className={styles.cardContent}>
                                         <Typography className={styles.roomName}>{room.name}</Typography>
                                         <Typography className={styles.description}>{room.description}</Typography>
+
+                                        <Button
+                                            onClick={() => router.push(`/room/${room.uuid}`)}
+                                        >
+                                            View Room
+                                        </Button>
+
+                                        <Button
+                                            className={styles.deleteRoom}
+                                            startIcon={<DeleteIcon />}
+                                            onClick={() => handleRemoveMember(room.uuid)}
+                                        >
+                                            Exit Room
+                                        </Button>
                                     </CardContent>
-
-                                    <Button
-                                        onClick={() => router.push(`/room/${room.uuid}`)}
-                                    >
-                                        View Room
-                                    </Button>
-
-                                    <Button
-                                        className={styles.deleteRoom}
-                                        startIcon={<DeleteIcon />}
-                                        onClick={() => handleRemoveMember(room.uuid)}
-                                    >
-                                        Exit Room
-                                    </Button>
                                 </Card>
                             );
                         })}

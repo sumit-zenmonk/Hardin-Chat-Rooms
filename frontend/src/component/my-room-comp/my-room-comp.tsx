@@ -91,8 +91,7 @@ export default function MyRoomComp() {
                                     elevation={2}
                                 >
                                     <Box className={bannerStyles.banner} style={{ backgroundImage: randomImageUrl() }} />
-                                    <CardContent className={styles.cardContent}
-                                    >
+                                    <CardContent className={styles.cardContent}>
                                         <Typography className={styles.roomName}>{room.name}</Typography>
                                         <Typography className={styles.description}>{room.description}</Typography>
 
