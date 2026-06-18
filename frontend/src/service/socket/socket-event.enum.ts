@@ -11,4 +11,5 @@ export enum SocketEventNameEnum {
 export enum SocketEventSubscribeEnum {
     SUBSCRIBE_ROOM_CONNECT = 'subscribe.room.connect',
     SUBSCRIBE_ROOM_CHAT_CREATED = 'subscribe.room.chat.created',
+    SUBSCRIBE_ROOM_CHAT_DELETED = 'subscribe.room.chat.deleted',
 }

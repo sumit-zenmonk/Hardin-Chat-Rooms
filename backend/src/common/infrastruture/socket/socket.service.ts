@@ -17,6 +17,7 @@ import { SocketEventSubscribeEnum } from './socket.enum';
 @WebSocketGateway({
     cors: {
         origin: '*',
+        methods: ['GET', 'POST', 'DELETE', 'PATCH'],
     },
 })
 export class SocketService implements OnGatewayConnection, OnGatewayDisconnect {
@@ -68,6 +69,7 @@ export class SocketService implements OnGatewayConnection, OnGatewayDisconnect {
     async emitToUser(userUuid: string, event: string, data: any) {
         const socketId = this.activeUsers.get(userUuid);
         if (socketId) {
+            console.log(`Socket event fired to user: ${event}`);
             this.server.to(socketId).emit(event, data);
         }
     }
@@ -83,6 +85,7 @@ export class SocketService implements OnGatewayConnection, OnGatewayDisconnect {
 
     // send msg to room
     async emitToRoom(room_uuid: string, event: string, data: any) {
+        console.log(`Socket event fired in room: ${event}`);
         this.server.to(room_uuid).emit(event, data);
     }
 }

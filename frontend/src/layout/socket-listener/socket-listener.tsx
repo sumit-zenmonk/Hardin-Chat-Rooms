@@ -2,8 +2,8 @@
 
 import { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks.ts";
-import { connectAuthSocket, disconnectSocket } from "@/service/socket";
-import { SocketEventNameEnum } from "@/layout/socket-listener/socket-event.enum";
+import { connectAuthSocket, disconnectAuthSocket } from "@/service/socket/socket";
+import { SocketEventNameEnum } from "@/service/socket/socket-event.enum";
 import { addJoinedRoom, addMyRoom, removeJoinedRoom, removeMyRoom } from "@/redux/feature/room/room-slice";
 
 import { addChat, removeChat } from "@/redux/feature/chat/chat-slice";
@@ -60,7 +60,7 @@ export const LayoutSocketListener = () => {
                 auth_socket.off(SocketEventNameEnum.ROOM_CHAT_CREATED);
                 auth_socket.off(SocketEventNameEnum.ROOM_CHAT_DELETED);
                 auth_socket.off(SocketEventNameEnum.ROOM_MEMBER_ONLINE_STATUS);
-                disconnectSocket();
+                disconnectAuthSocket();
             };
         }
     }, [dispatch, token]);

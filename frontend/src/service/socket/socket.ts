@@ -9,9 +9,10 @@ export const connectAuthSocket = (token: string): Socket => {
         auth: { token }
     })
     auth_socket = io(BACKEND_URL);
+    console.log('Auth socket Connected', auth_socket);
     return auth_socket;
 }
-export const disconnectSocket = (): void => {
+export const disconnectAuthSocket = (): void => {
     if (auth_socket) {
         auth_socket.disconnect()
         auth_socket = null
@@ -22,6 +23,7 @@ export const connectUnAuthSocket = (): Socket => {
     if (!unauth_socket) {
         unauth_socket = io(BACKEND_URL, {});
     }
+    console.log('UnAuth socket Connected', unauth_socket);
     return unauth_socket;
 };
 export const disconnectUnAuthSocket = (): void => {
