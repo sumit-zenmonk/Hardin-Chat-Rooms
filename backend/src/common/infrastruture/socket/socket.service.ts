@@ -1,6 +1,9 @@
 import {
     OnGatewayConnection,
     OnGatewayDisconnect,
+    SubscribeMessage,
+    ConnectedSocket,
+    MessageBody,
     WebSocketGateway,
     WebSocketServer,
 } from '@nestjs/websockets';
@@ -8,6 +11,7 @@ import { Server, Socket } from 'socket.io';
 import { Injectable } from '@nestjs/common';
 import { JwtHelperService } from 'src/module/user-module/infrastructure/services/jwt.service';
 import { UserRepository } from 'src/module/user-module/infrastructure/repository/user.repository';
+import { SocketEventSubscribeEnum } from './socket.enum';
 
 @Injectable()
 @WebSocketGateway({
@@ -31,7 +35,7 @@ export class SocketService implements OnGatewayConnection, OnGatewayDisconnect {
         try {
             const token = client.handshake.auth.token || client.handshake.headers.authorization;
             if (!token) {
-                client.disconnect();
+                console.log(`Unauth Socket Request Connected`);
                 return;
             }
 
@@ -66,5 +70,19 @@ export class SocketService implements OnGatewayConnection, OnGatewayDisconnect {
         if (socketId) {
             this.server.to(socketId).emit(event, data);
         }
+    }
+
+    @SubscribeMessage(SocketEventSubscribeEnum.SUBSCRIBE_ROOM_CONNECT)
+    handleRoomConnection(
+        @MessageBody() data: any,
+        @ConnectedSocket() client: Socket
+    ) {
+        console.log(`Unauth Room Connected: ${data.room_uuid}`);
+        client.join(data.room_uuid);
+    }
+
+    // send msg to room
+    async emitToRoom(room_uuid: string, event: string, data: any) {
+        this.server.to(room_uuid).emit(event, data);
     }
 }

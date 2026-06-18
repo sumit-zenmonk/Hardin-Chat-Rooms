@@ -7,3 +7,8 @@ export enum SocketEventNameEnum {
     ROOM_CHAT_DELETED = 'room.chat.deleted',
     ROOM_MEMBER_ONLINE_STATUS = 'room.member.online.status',
 }
+
+export enum SocketEventSubscribeEnum {
+    SUBSCRIBE_ROOM_CONNECT = 'subscribe.room.connect',
+    SUBSCRIBE_ROOM_CHAT_CREATED = 'subscribe.room.chat.created',
+}

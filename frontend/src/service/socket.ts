@@ -1,22 +1,35 @@
 import { io, Socket } from "socket.io-client"
 
-let socket: Socket | null = null
+let auth_socket: Socket | null = null
+let unauth_socket: Socket | null = null
+const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:3000";
 
-export const connectSocket = (token: string): Socket => {
-    const socketUrl = process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:3000"
-
-    socket = io(socketUrl, {
+export const connectAuthSocket = (token: string): Socket => {
+    auth_socket = io(BACKEND_URL, {
         auth: { token }
     })
-
-    return socket
+    auth_socket = io(BACKEND_URL);
+    return auth_socket;
 }
-
-export const getSocket = (): Socket | null => socket
-
 export const disconnectSocket = (): void => {
-    if (socket) {
-        socket.disconnect()
-        socket = null
+    if (auth_socket) {
+        auth_socket.disconnect()
+        auth_socket = null
     }
 }
+
+export const connectUnAuthSocket = (): Socket => {
+    if (!unauth_socket) {
+        unauth_socket = io(BACKEND_URL, {});
+    }
+    return unauth_socket;
+};
+export const disconnectUnAuthSocket = (): void => {
+    if (unauth_socket) {
+        unauth_socket.disconnect();
+        unauth_socket = null;
+    }
+};
+
+export const getAuthSocket = (): Socket | null => auth_socket
+export const getUnAuthSocket = (): Socket | null => unauth_socket

@@ -14,6 +14,10 @@ import { enqueueSnackbar } from "notistack";
 import dynamic from 'next/dynamic';
 import { createRoomChat, deleteRoomChat, getRoomChats } from "@/redux/feature/chat/chat-action";
 import DeleteIcon from '@mui/icons-material/Delete';
+import { connectUnAuthSocket } from "@/service/socket";
+import { SocketEventSubscribeEnum } from "@/layout/socket-listener/socket-event.enum";
+import { addChat } from "@/redux/feature/chat/chat-slice";
+let unauth_socket: any;
 
 // Dynamically import the EmojiPicker to disable SSR
 const EmojiPicker = dynamic(() => import('emoji-picker-react'), { ssr: false });
@@ -25,11 +29,11 @@ export default function SpecificRoomChat() {
   const { roomMembers } = useAppSelector((state: RootState) => state.roomMemberReducer);
   const { user } = useAppSelector((state: RootState) => state.authReducer);
   const { roomChats, roomChatsTotalDocuments, loading } = useAppSelector((state: RootState) => state.chatReducer);
-  
+
   const members = roomMembers?.[room_uuid];
   const chats = roomChats?.[room_uuid] || [];
   const totalChats = roomChatsTotalDocuments?.[room_uuid] || 0;
-  
+
   const member = roomMembers?.[room_uuid]?.find((member) => member.user_uuid == user?.uuid);
   const [offset, setOffset] = useState(0);
   const limit = Number(process.env.NEXT_PUBLIC_PAGE_LIMIT) || 10;
@@ -40,6 +44,26 @@ export default function SpecificRoomChat() {
     dispatch(getRoomMembers({ room_uuid: room_uuid, limit: 0, offset: 0 })).unwrap();
     dispatch(getRoomChats({ room_uuid: room_uuid, limit: limit, offset: 0 })).unwrap();
   }, [room_uuid]);
+
+  useEffect(() => {
+    unauth_socket = connectUnAuthSocket();
+
+    if (room_uuid) {
+      unauth_socket.emit(SocketEventSubscribeEnum.SUBSCRIBE_ROOM_CONNECT, { room_uuid });
+
+      const handleNewChat = (data: any) => {
+        console.log("Received new room chat:", data);
+        dispatch(addChat(data));
+      };
+
+      unauth_socket.on(SocketEventSubscribeEnum.SUBSCRIBE_ROOM_CHAT_CREATED, handleNewChat);
+
+      return () => {
+        unauth_socket.off(SocketEventSubscribeEnum.SUBSCRIBE_ROOM_CHAT_CREATED, handleNewChat);
+      };
+    }
+  }, [room_uuid, dispatch]);
+
 
   const fetchMoreData = () => {
     const nextOffset = offset + limit;
@@ -115,8 +139,8 @@ export default function SpecificRoomChat() {
         >
           <Box className={styles.roomChatWrapper}>
             {chats.map((chat) => (
-              <Box 
-                key={chat.uuid} 
+              <Box
+                key={chat.uuid}
                 className={`${styles.chatMessage} ${chat.member?.user_uuid === user?.uuid ? styles.myMessage : styles.otherMessage}`}
               >
                 <Box className={styles.messageContent}>
