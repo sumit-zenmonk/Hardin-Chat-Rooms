@@ -24,7 +24,7 @@ export default function LinkShareComp({ open, onClose, data }: Props) {
     const handlePick = () => {
         onClose();
     }
-console.log(data);
+
     return (
         <Dialog open={open} onClose={onClose} fullWidth maxWidth="sm" className={styles.container}>
             <Box className={styles.header}>
