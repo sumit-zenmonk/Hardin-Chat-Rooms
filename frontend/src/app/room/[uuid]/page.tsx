@@ -12,6 +12,7 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import { RoomMember } from "@/redux/feature/member/member-type";
 import { enqueueSnackbar } from "notistack";
 import LinkShareComp from "@/component/link-share-comp/link-share-comp";
+import { randomImageUrl } from "@/utils/random";
 
 export default function SpecificRoom() {
   const dispatch = useAppDispatch();
@@ -92,7 +93,7 @@ export default function SpecificRoom() {
                   className={styles.card}
                   elevation={2}
                 >
-                  <Box className={bannerStyles.banner} />
+                  <Box className={bannerStyles.banner} style={{ backgroundImage: randomImageUrl() }} />
                   <Avatar>
                     {member.user.name ? member.user.name.charAt(0).toUpperCase() : '?'}
                   </Avatar>

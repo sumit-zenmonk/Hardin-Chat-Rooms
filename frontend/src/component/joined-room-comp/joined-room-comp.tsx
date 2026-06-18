@@ -13,6 +13,7 @@ import type { Room } from "@/redux/feature/room/room-type";
 import DeleteIcon from '@mui/icons-material/Delete';
 import { deleteRoomMember } from "@/redux/feature/member/member-action";
 import { useRouter } from "next/navigation";
+import { randomImageUrl } from "@/utils/random";
 
 export default function JoinedRoomComp() {
     const router = useRouter();
@@ -78,7 +79,7 @@ export default function JoinedRoomComp() {
                                     className={styles.card}
                                     elevation={2}
                                 >
-                                    <Box className={bannerStyles.banner} />
+                                    <Box className={bannerStyles.banner} style={{ backgroundImage: randomImageUrl() }} />
                                     <CardContent className={styles.cardContent}>
                                         <Typography className={styles.roomName}>{room.name}</Typography>
                                         <Typography className={styles.description}>{room.description}</Typography>

@@ -1,7 +1,6 @@
 .banner {
     width: 100%;
     height: 200px;
-    background-image: url("https://picsum.photos/800/200?blur=2");
     background-size: auto;
     background-position: center;
 }

@@ -151,6 +151,10 @@
     color: #006ea1;
 }
 
+.senderEmail:hover {
+    cursor: pointer;
+}
+
 .messageText {
     word-break: break-word;
     font-size: 0.95rem;

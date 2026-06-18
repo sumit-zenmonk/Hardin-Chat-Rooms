@@ -12,6 +12,7 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import type { Room } from "@/redux/feature/room/room-type";
 import { createRoomMember } from "@/redux/feature/member/member-action";
 import { useRouter } from "next/navigation";
+import { randomImageUrl } from "@/utils/random";
 
 export default function Home() {
   const router = useRouter();
@@ -80,7 +81,7 @@ export default function Home() {
                   className={styles.card}
                   elevation={2}
                 >
-                  <Box className={bannerStyles.banner} />
+                  <Box className={bannerStyles.banner} style={{ backgroundImage: randomImageUrl() }} />
                   <CardContent className={styles.cardContent}>
                     <Typography className={styles.roomName}>{room.name}</Typography>
                     <Typography className={styles.description}>{room.description}</Typography>
