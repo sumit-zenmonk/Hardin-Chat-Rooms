@@ -7,7 +7,6 @@ import { SocketEventNameEnum } from "@/service/socket/socket-event.enum";
 import { addJoinedRoom, addMyRoom, removeJoinedRoom, removeMyRoom } from "@/redux/feature/room/room-slice";
 
 import { addChat, removeChat } from "@/redux/feature/chat/chat-slice";
-import { updateMemberOnlineStatus } from "@/redux/feature/member/member-slice";
 
 export const LayoutSocketListener = () => {
     const dispatch = useAppDispatch();
@@ -47,11 +46,6 @@ export const LayoutSocketListener = () => {
                 dispatch(removeChat(data));
             });
 
-            auth_socket.on(SocketEventNameEnum.ROOM_MEMBER_ONLINE_STATUS, (data) => {
-                console.log(SocketEventNameEnum.ROOM_MEMBER_ONLINE_STATUS, data);
-                dispatch(updateMemberOnlineStatus(data));
-            });
-
             return () => {
                 auth_socket.off(SocketEventNameEnum.ROOM_CREATED);
                 auth_socket.off(SocketEventNameEnum.ROOM_DELETED);
@@ -59,7 +53,6 @@ export const LayoutSocketListener = () => {
                 auth_socket.off(SocketEventNameEnum.ROOM_MEMBER_DELETED);
                 auth_socket.off(SocketEventNameEnum.ROOM_CHAT_CREATED);
                 auth_socket.off(SocketEventNameEnum.ROOM_CHAT_DELETED);
-                auth_socket.off(SocketEventNameEnum.ROOM_MEMBER_ONLINE_STATUS);
                 disconnectAuthSocket();
             };
         }
