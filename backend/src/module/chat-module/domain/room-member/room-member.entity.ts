@@ -12,9 +12,6 @@ export class RoomMemberEntity {
     @Column({ type: "uuid", nullable: false })
     user_uuid: string;
 
-    @Column({ type: "bool", default: false })
-    is_online: boolean;
-
     @Column({
         type: 'enum',
         enum: RoomMemberRole,

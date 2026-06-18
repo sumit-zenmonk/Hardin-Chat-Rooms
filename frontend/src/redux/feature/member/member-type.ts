@@ -26,7 +26,6 @@ export interface RoomMember {
     room: Room;
     role: RoomMemberRole,
     user: User;
-    is_online?: boolean;
     created_at: string;
     updated_at: string;
     deleted_at: string | null;

@@ -15,7 +15,6 @@ export class roomMemberMigration1778505600002 implements MigrationInterface {
                     { name: "uuid", type: "uuid", isPrimary: true, generationStrategy: "uuid", default: "uuid_generate_v4()", },
                     { name: "room_uuid", type: "uuid", isNullable: false, },
                     { name: "user_uuid", type: "uuid", isNullable: false, },
-                    { name: "is_online", type: "bool", default: false },
                     { name: "role", type: `"chat_schema"."room_member_role_enum"`, default: `'user'`, isNullable: false },
                     { name: "created_at", type: "timestamp", default: "now()", },
                     { name: "updated_at", type: "timestamp", default: "now()", },

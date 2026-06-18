@@ -11,7 +11,6 @@ export interface RoomChat {
         uuid: string;
         user_uuid: string;
         room_uuid: string;
-        is_online: boolean;
         role: string;
     };
     room: {
