@@ -14,5 +14,5 @@ export class CreateRoomChatDto {
     @IsString()
     @MinLength(1)
     @MaxLength(2000)
-    msg: string
+    message: string
 }

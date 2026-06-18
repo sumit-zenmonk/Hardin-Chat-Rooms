@@ -17,7 +17,7 @@ export class RoomChatEntity {
     parent_uuid: string;
 
     @Column({ type: "text" })
-    msg: string;
+    message: string;
 
     @ManyToOne(() => RoomEntity, (room) => room.uuid)
     @JoinColumn({ name: "room_uuid" })

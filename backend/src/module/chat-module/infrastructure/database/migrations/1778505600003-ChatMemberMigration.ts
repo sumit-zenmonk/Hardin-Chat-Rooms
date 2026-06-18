@@ -12,7 +12,7 @@ export class ChatMigration1778505600003 implements MigrationInterface {
                     { name: "member_uuid", type: "uuid", isNullable: false, },
                     { name: "room_uuid", type: "uuid", isNullable: false, },
                     { name: "parent_uuid", type: "uuid", isNullable: true, },
-                    { name: "msg", type: "text", isNullable: false, },
+                    { name: "message", type: "text", isNullable: false, },
                     { name: "created_at", type: "timestamp", default: "now()", },
                     { name: "updated_at", type: "timestamp", default: "now()", },
                     { name: "deleted_at", type: "timestamp", isNullable: true, },

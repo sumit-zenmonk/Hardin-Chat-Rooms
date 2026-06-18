@@ -17,6 +17,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import { connectUnAuthSocket } from "@/service/socket/socket";
 import { SocketEventSubscribeEnum } from "@/service/socket/socket-event.enum";
 import { addChat, removeChat } from "@/redux/feature/chat/chat-slice";
+import { RoomChat } from "@/redux/feature/chat/chat-type";
 let unauth_socket: any;
 
 // Dynamically import the EmojiPicker to disable SSR
@@ -94,7 +95,7 @@ export default function SpecificRoomChat() {
         return;
       }
 
-      await dispatch(createRoomChat({ member_uuid: member?.uuid, msg: message, room_uuid })).unwrap();
+      await dispatch(createRoomChat({ member_uuid: member?.uuid, message: message, room_uuid })).unwrap();
 
       setIsEmojiPickerOpen(false);
       setMessage('');
@@ -144,7 +145,7 @@ export default function SpecificRoomChat() {
           style={{ display: 'flex', flexDirection: 'column-reverse' }}
         >
           <Box className={styles.roomChatWrapper}>
-            {chats.map((chat) => (
+            {chats.map((chat: RoomChat) => (
               <Box
                 key={chat.uuid}
                 className={`${styles.chatMessage} ${chat.member?.user_uuid === user?.uuid ? styles.myMessage : styles.otherMessage}`}
@@ -153,7 +154,7 @@ export default function SpecificRoomChat() {
                   <Typography variant="caption" className={styles.senderName}>
                     {chat.member?.user_uuid === user?.uuid ? 'You' : `User ${chat.member?.user_uuid.slice(0, 4)}`}
                   </Typography>
-                  <Typography className={styles.messageText}>{chat.msg}</Typography>
+                  <Typography className={styles.messageText}>{chat.message}</Typography>
                   <Box className={styles.messageFooter}>
                     <Typography variant="caption" className={styles.messageTime}>
                       {new Date(chat.created_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}

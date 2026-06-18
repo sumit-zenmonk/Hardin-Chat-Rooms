@@ -103,40 +103,40 @@ export class RabbitMQService implements OnModuleDestroy {
         try {
             await channel.consume(
                 queueName,
-                async (msg) => {
-                    if (!msg) return;
+                async (message) => {
+                    if (!message) return;
 
                     try {
-                        const content = JSON.parse(msg.content.toString());
+                        const content = JSON.parse(message.content.toString());
                         await callback(content);
-                        channel.ack(msg);
+                        channel.ack(message);
                     } catch (err) {
                         this.logger.error(`Consumer error on queue ${queueName}`, err);
 
                         const maxTries = Number(process.env.RABBIT_MQ_MAX_TRY) || 5;
                         const maxRequeues = Number(process.env.RABBIT_MQ_MAX_REQUEUE_TRY) || 3;
-                        const requeueTry = (msg.properties.headers?.[RetryMechanismHeaderEnum.XREQUEUETRY] || 0) as number;
+                        const requeueTry = (message.properties.headers?.[RetryMechanismHeaderEnum.XREQUEUETRY] || 0) as number;
 
                         for (let attempt = 1; attempt <= maxTries; attempt++) {
                             try {
-                                const content = JSON.parse(msg.content.toString());
+                                const content = JSON.parse(message.content.toString());
                                 await callback(content);
-                                channel.ack(msg);
+                                channel.ack(message);
                                 return;
                             } catch (error) { }
                         }
 
                         if (requeueTry + 1 < maxRequeues) {
                             const retryQueue = `${queueName}.retry`;
-                            channel.sendToQueue(retryQueue, msg.content, {
+                            channel.sendToQueue(retryQueue, message.content, {
                                 persistent: true,
-                                headers: { ...msg.properties.headers, [RetryMechanismHeaderEnum.XREQUEUETRY]: requeueTry + 1 },
+                                headers: { ...message.properties.headers, [RetryMechanismHeaderEnum.XREQUEUETRY]: requeueTry + 1 },
                             });
-                            channel.ack(msg);
+                            channel.ack(message);
                             return;
                         }
 
-                        channel.nack(msg, false, false);
+                        channel.nack(message, false, false);
                     }
                 },
                 { noAck: false },

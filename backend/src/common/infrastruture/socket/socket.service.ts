@@ -65,7 +65,7 @@ export class SocketService implements OnGatewayConnection, OnGatewayDisconnect {
         }
     }
 
-    // send msg to receiver only
+    // send message to receiver only
     async emitToUser(userUuid: string, event: string, data: any) {
         const socketId = this.activeUsers.get(userUuid);
         if (socketId) {
@@ -83,7 +83,7 @@ export class SocketService implements OnGatewayConnection, OnGatewayDisconnect {
         client.join(data.room_uuid);
     }
 
-    // send msg to room
+    // send message to room
     async emitToRoom(room_uuid: string, event: string, data: any) {
         console.log(`Socket event fired in room: ${event}`);
         this.server.to(room_uuid).emit(event, data);
