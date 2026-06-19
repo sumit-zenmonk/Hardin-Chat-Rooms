@@ -26,7 +26,12 @@ export class JoinRoomMemberService {
             throw new BadRequestException("Room Not Found");
         }
 
-        const isRoomMemberExists = await this.roomMemberRepository.findByUserUuidAndRoomUuid(req.user.uuid, body.room_uuid);
+        const members_data = await this.roomMemberRepository.getRoomMemberListing(body.room_uuid);
+        if (members_data.total >= Number(process.env.WRITER_ALLOWED_LIMIT || 10)) {
+            throw new BadRequestException("Room Members Limit Exceeded");
+        }
+
+        const isRoomMemberExists = members_data.data.filter((member) => member.user_uuid == req.user.uuid);
         if (isRoomMemberExists) {
             throw new BadRequestException("Already Member of Room");
         }
