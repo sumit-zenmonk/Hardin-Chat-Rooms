@@ -30,6 +30,7 @@ export interface RoomState {
     publicRoomsTotalDocuments: number;
     joinedRooms: Room[];
     joinedRoomsTotalDocuments: number;
+    viewerCounts: Record<string, number>;
     loading: boolean;
     error: string | null;
 }

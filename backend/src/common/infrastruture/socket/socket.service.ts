@@ -27,6 +27,9 @@ export class SocketService implements OnGatewayConnection, OnGatewayDisconnect {
     private activeUsers = new Map<string, string>();
     // user_uuid -> socket_id
 
+    private roomViewers = new Map<string, Set<string>>();
+    // room_uuid -> Set of socket_ids
+
     constructor(
         private readonly jwtHelperService: JwtHelperService,
         private readonly userRepository: UserRepository,
@@ -50,17 +53,27 @@ export class SocketService implements OnGatewayConnection, OnGatewayDisconnect {
 
             this.activeUsers.set(decoded.uuid, client.id);
             console.log(`User connected: ${decoded.uuid}`);
+            await this.userRepository.updateOnlineStatus(decoded.uuid, true);
         } catch (e) {
             client.disconnect();
         }
     }
 
-    handleDisconnect(client: Socket) {
+    async handleDisconnect(client: Socket) {
         for (const [uuid, socketId] of this.activeUsers.entries()) {
             if (socketId === client.id) {
                 this.activeUsers.delete(uuid);
                 console.log(`User disconnected: ${uuid}`);
+                await this.userRepository.updateOnlineStatus(uuid, false);
                 break;
+            }
+        }
+
+        for (const [roomUuid, viewers] of this.roomViewers.entries()) {
+            if (viewers.has(client.id)) {
+                viewers.delete(client.id);
+                const count = viewers.size;
+                this.server.emit('room.viewer.count', { room_uuid: roomUuid, count });
             }
         }
     }
@@ -81,6 +94,19 @@ export class SocketService implements OnGatewayConnection, OnGatewayDisconnect {
     ) {
         console.log(`Unauth Room Connected: ${data.room_uuid}`);
         client.join(data.room_uuid);
+
+        const roomUuid = data.room_uuid;
+        if (roomUuid) {
+            if (!this.roomViewers.has(roomUuid)) {
+                this.roomViewers.set(roomUuid, new Set<string>());
+            }
+            const viewers = this.roomViewers.get(roomUuid);
+            if (viewers) {
+                viewers.add(client.id);
+                const count = viewers.size;
+                this.server.emit('room.viewer.count', { room_uuid: roomUuid, count });
+            }
+        }
     }
 
     // send message to room

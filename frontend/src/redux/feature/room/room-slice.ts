@@ -12,6 +12,7 @@ const initialState: RoomState = {
     publicRoomsTotalDocuments: 0,
     joinedRooms: [],
     joinedRoomsTotalDocuments: 0,
+    viewerCounts: {},
     loading: false,
     error: null,
 };
@@ -20,6 +21,9 @@ const roomSlice = createSlice({
     name: "room",
     initialState,
     reducers: {
+        updateRoomViewerCount: (state, action: { payload: { room_uuid: string; count: number } }) => {
+            state.viewerCounts[action.payload.room_uuid] = action.payload.count;
+        },
         resetRoomError: (state) => {
             state.error = null;
         },
@@ -142,5 +146,5 @@ const roomSlice = createSlice({
     },
 });
 
-export const { resetRoomError, addMyRoom, removeMyRoom, addJoinedRoom, removeJoinedRoom } = roomSlice.actions;
+export const { resetRoomError, addMyRoom, removeMyRoom, addJoinedRoom, removeJoinedRoom, updateRoomViewerCount } = roomSlice.actions;
 export default roomSlice.reducer;

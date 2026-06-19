@@ -19,9 +19,6 @@ export class CreateRoomChatService {
         if (!member) {
             throw new BadRequestException("Member not found");
         }
-        if (!member.is_writer) {
-            throw new BadRequestException("Not Allowed to write in Room");
-        }
 
         const newChat = await this.roomChatRepository.createRoomChat({
             ...body,

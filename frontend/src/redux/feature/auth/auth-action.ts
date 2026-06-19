@@ -70,3 +70,27 @@ export const logoutUser = createAsyncThunk(
         }
     }
 )
+
+export const getUserProfile = createAsyncThunk(
+    "auth/getUserProfile",
+    async (_, { rejectWithValue, getState }) => {
+        try {
+            const state = getState() as any;
+            const token = state.authReducer?.token;
+
+            const res = await fetch(`/api/v1/user`, {
+                method: "GET",
+                headers: {
+                    "Authorization": token || ""
+                }
+            })
+
+            const result = await res.json()
+            if (!res.ok) throw new Error(result.message)
+
+            return result
+        } catch (error: any) {
+            return rejectWithValue(error.message)
+        }
+    }
+)

@@ -9,13 +9,6 @@ export class JoinRoomMemberService {
     ) { }
 
     async handle(body: RoomMemberCreatedMQEventPayload) {
-        let data = body as any;
-
-        const isEligilbleForWriter = await this.roomMemberRepository.findTopWriters(body.room_uuid);
-        if (isEligilbleForWriter.length <= Number(process.env.WRITER_ALLOWED_LIMIT) || 10) {
-            data = { ...data, is_writer: true };
-        }
-
         await this.roomMemberRepository.createRoomMember({ ...body });
         return;
     }

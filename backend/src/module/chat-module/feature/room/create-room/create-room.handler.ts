@@ -19,7 +19,6 @@ export class CreateRoomService {
                 role: RoomMemberRole.CREATOR,
                 room_uuid: newRoom.uuid,
                 user_uuid: body.creator_uuid,
-                is_writer: true
             }
         );
         return;

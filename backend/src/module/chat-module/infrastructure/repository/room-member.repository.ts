@@ -51,26 +51,6 @@ export class RoomMemberRepository extends Repository<RoomMemberEntity> {
         return { data, total };
     }
 
-    async findTopWriters(room_uuid: string) {
-        const members = await this.find({
-            where: {
-                room_uuid,
-                is_writer: true,
-            },
-        });
-        return members;
-    }
-
-    async findTopMembers(room_uuid: string) {
-        const members = await this.find({
-            where: {
-                room_uuid,
-            },
-            take: Number(process.env.WRITER_ALLOWED_LIMIT) || 10
-        });
-        return members;
-    }
-
     async deleteRoomMember(uuid: string) {
         await this.softDelete(uuid);
         return;

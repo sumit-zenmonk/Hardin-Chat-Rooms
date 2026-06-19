@@ -18,7 +18,7 @@ import { randomImageUrl } from "@/utils/random";
 export default function JoinedRoomComp() {
     const router = useRouter();
     const dispatch = useAppDispatch();
-    const { joinedRooms, joinedRoomsTotalDocuments } = useAppSelector((state: RootState) => state.roomReducer);
+    const { joinedRooms, joinedRoomsTotalDocuments, viewerCounts } = useAppSelector((state: RootState) => state.roomReducer);
     const [offset, setOffset] = useState(Number(process.env.NEXT_PUBLIC_PAGE_OFFSET) || 0);
     const limit = Number(process.env.NEXT_PUBLIC_PAGE_LIMIT) || 10;
 
@@ -83,6 +83,9 @@ export default function JoinedRoomComp() {
                                     <CardContent className={styles.cardContent}>
                                         <Typography className={styles.roomName}>{room.name}</Typography>
                                         <Typography className={styles.description}>{room.description}</Typography>
+                                        <Typography variant="body2" color="textSecondary" style={{ marginBottom: '8px' }}>
+                                            Live Viewers: {viewerCounts[room.uuid] || 0}
+                                        </Typography>
 
                                         <Button
                                             onClick={() => router.push(`/room/${room.uuid}`)}

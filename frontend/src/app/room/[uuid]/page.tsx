@@ -20,6 +20,7 @@ export default function SpecificRoom() {
   const { uuid } = useParams();
   const room_uuid = String(uuid);
   const { roomMembers, roomMembersTotalDocuments } = useAppSelector((state: RootState) => state.roomMemberReducer);
+  const { user } = useAppSelector((state: RootState) => state.authReducer);
   const members = roomMembers?.[room_uuid];
   const total_members = roomMembersTotalDocuments?.[room_uuid];
   const [offset, setOffset] = useState(Number(process.env.NEXT_PUBLIC_PAGE_OFFSET) || 0);
@@ -94,7 +95,7 @@ export default function SpecificRoom() {
                   elevation={2}
                 >
                   <Box className={bannerStyles.banner} style={{ backgroundImage: randomImageUrl() }} />
-                  <Avatar>
+                  <Avatar src={(member.user_uuid === user?.uuid && user?.profile_image) ? user.profile_image : undefined}>
                     {member.user.name ? member.user.name.charAt(0).toUpperCase() : '?'}
                   </Avatar>
 
@@ -102,6 +103,11 @@ export default function SpecificRoom() {
                     <Typography className={styles.roomMemberName}>Name : {member.user.name}</Typography>
                     <Typography className={styles.email}>Email : {member.user.email}</Typography>
                     <Typography className={styles.role}>Role : {member.role}</Typography>
+                    {member.user_uuid === user?.uuid && (
+                      <Typography variant="body2" style={{ color: user?.is_online ? '#4caf50' : '#757575', fontWeight: 'bold' }}>
+                        Status: {user?.is_online ? 'Online' : 'Offline'}
+                      </Typography>
+                    )}
                   </CardContent>
                 </Card>
               );

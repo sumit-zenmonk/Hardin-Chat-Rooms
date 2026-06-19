@@ -6,6 +6,7 @@ import {
     signupUser,
     loginUser,
     logoutUser,
+    getUserProfile,
 } from "./auth-action"
 import Cookies from 'js-cookie';
 
@@ -88,8 +89,11 @@ const authSlice = createSlice({
                 Cookies.remove("role")
                 state.error = action.payload as string
             })
+            .addCase(getUserProfile.fulfilled, (state, action) => {
+                state.user = action.payload.user;
+            })
     }
 })
 
 export const { resetAuth, resetAuthError } = authSlice.actions;
-export default authSlice.reducer
+export default authSlice.reducer;

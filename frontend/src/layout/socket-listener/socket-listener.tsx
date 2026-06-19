@@ -4,9 +4,10 @@ import { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks.ts";
 import { connectAuthSocket, disconnectAuthSocket } from "@/service/socket/socket";
 import { SocketEventNameEnum } from "@/service/socket/socket-event.enum";
-import { addJoinedRoom, addMyRoom, removeJoinedRoom, removeMyRoom } from "@/redux/feature/room/room-slice";
+import { addJoinedRoom, addMyRoom, removeJoinedRoom, removeMyRoom, updateRoomViewerCount } from "@/redux/feature/room/room-slice";
 
 import { addChat, removeChat } from "@/redux/feature/chat/chat-slice";
+import { getUserProfile } from "@/redux/feature/auth/auth-action";
 
 export const LayoutSocketListener = () => {
     const dispatch = useAppDispatch();
@@ -14,6 +15,7 @@ export const LayoutSocketListener = () => {
 
     useEffect(() => {
         if (token) {
+            dispatch(getUserProfile());
             const auth_socket = connectAuthSocket(token);
 
             auth_socket.on(SocketEventNameEnum.ROOM_CREATED, (data) => {
@@ -46,6 +48,11 @@ export const LayoutSocketListener = () => {
                 dispatch(removeChat(data));
             });
 
+            auth_socket.on('room.viewer.count', (data: { room_uuid: string; count: number }) => {
+                console.log('room.viewer.count', data);
+                dispatch(updateRoomViewerCount(data));
+            });
+
             return () => {
                 auth_socket.off(SocketEventNameEnum.ROOM_CREATED);
                 auth_socket.off(SocketEventNameEnum.ROOM_DELETED);
@@ -53,6 +60,7 @@ export const LayoutSocketListener = () => {
                 auth_socket.off(SocketEventNameEnum.ROOM_MEMBER_DELETED);
                 auth_socket.off(SocketEventNameEnum.ROOM_CHAT_CREATED);
                 auth_socket.off(SocketEventNameEnum.ROOM_CHAT_DELETED);
+                auth_socket.off('room.viewer.count');
                 disconnectAuthSocket();
             };
         }

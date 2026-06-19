@@ -19,9 +19,6 @@ export class RoomMemberEntity {
     })
     role: RoomMemberRole;
 
-    @Column({ type: "bool", default: false })
-    is_writer: boolean;
-
     @CreateDateColumn()
     created_at: Date;
 

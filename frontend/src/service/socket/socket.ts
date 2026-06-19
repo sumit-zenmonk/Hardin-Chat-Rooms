@@ -5,11 +5,12 @@ let unauth_socket: Socket | null = null
 const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:8090";
 
 export const connectAuthSocket = (token: string): Socket => {
-    auth_socket = io(BACKEND_URL, {
-        auth: { token }
-    })
-    auth_socket = io(BACKEND_URL);
-    console.log('Auth socket Connected', auth_socket);
+    if (!auth_socket) {
+        auth_socket = io(BACKEND_URL, {
+            auth: { token }
+        })
+        console.log('Auth socket Connected', auth_socket);
+    }
     return auth_socket;
 }
 export const disconnectAuthSocket = (): void => {
