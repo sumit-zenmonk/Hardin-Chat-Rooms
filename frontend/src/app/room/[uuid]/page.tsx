@@ -103,11 +103,9 @@ export default function SpecificRoom() {
                     <Typography className={styles.roomMemberName}>Name : {member.user.name}</Typography>
                     <Typography className={styles.email}>Email : {member.user.email}</Typography>
                     <Typography className={styles.role}>Role : {member.role}</Typography>
-                    {member.user_uuid === user?.uuid && (
-                      <Typography variant="body2" style={{ color: user?.is_online ? '#4caf50' : '#757575', fontWeight: 'bold' }}>
-                        Status: {user?.is_online ? 'Online' : 'Offline'}
-                      </Typography>
-                    )}
+                    <Typography variant="body2" style={{ color: member.user.is_online ? '#4caf50' : '#757575', fontWeight: 'bold' }}>
+                      Status: {member.user.is_online ? 'Online' : 'Offline'}
+                    </Typography>
                   </CardContent>
                 </Card>
               );
