@@ -79,7 +79,8 @@ export default function JoinedRoomComp() {
                                     className={styles.card}
                                     elevation={2}
                                 >
-                                    <Box className={bannerStyles.banner} style={{ backgroundImage: randomImageUrl() }} />
+                                    <Box className={bannerStyles.banner} style={{ backgroundImage: randomImageUrl() }}></Box>
+
                                     <CardContent className={styles.cardContent}>
                                         <Typography className={styles.roomName}>{room.name}</Typography>
                                         <Typography className={styles.description}>{room.description}</Typography>

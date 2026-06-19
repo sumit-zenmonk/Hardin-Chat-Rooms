@@ -11,5 +11,15 @@
     background-size: auto;
     background-position: center;
     position: absolute;
-    top: 30;
+    top: 50;
+    left: 90;
+}
+
+.memberCount {
+    top: 0;
+    right: 0;
+    position: absolute;
+    background-color: white;
+    border-radius: 16px;
+    padding: 2%;
 }

@@ -94,10 +94,11 @@ export default function SpecificRoom() {
                   className={styles.card}
                   elevation={2}
                 >
-                  <Box className={bannerStyles.banner} style={{ backgroundImage: randomImageUrl() }} />
-                  <Avatar src={member.user.profile_image ? member.user.profile_image : undefined} className={bannerStyles.avatar} >
-                    {member.user.name ? member.user.name.charAt(0).toUpperCase() : '?'}
-                  </Avatar>
+                  <Box className={bannerStyles.banner} style={{ backgroundImage: randomImageUrl() }}>
+                    <Avatar src={member.user.profile_image ? member.user.profile_image : undefined} className={bannerStyles.avatar} >
+                      {member.user.name ? member.user.name.charAt(0).toUpperCase() : '?'}
+                    </Avatar>
+                  </Box>
 
                   <CardContent className={styles.cardContent}>
                     <Typography className={styles.roomMemberName}>Name : {member.user.name}</Typography>

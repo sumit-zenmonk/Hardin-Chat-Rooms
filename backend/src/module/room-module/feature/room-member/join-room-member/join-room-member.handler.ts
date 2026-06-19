@@ -27,7 +27,7 @@ export class JoinRoomMemberService {
         }
 
         const members_data = await this.roomMemberRepository.getRoomMemberListing(body.room_uuid);
-        if (members_data.total >= Number(process.env.WRITER_ALLOWED_LIMIT || 10)) {
+        if (members_data.total >= Number(process.env.ROOM_MEMBER_LIMIT || 10)) {
             throw new BadRequestException("Room Members Limit Exceeded");
         }
 
