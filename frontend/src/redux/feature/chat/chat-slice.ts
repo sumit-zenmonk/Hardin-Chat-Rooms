@@ -73,6 +73,11 @@ const roomSlice = createSlice({
             })
             .addCase(deleteRoomChat.fulfilled, (state, action) => {
                 state.loading = false;
+                const { chat_uuid, room_uuid, message, user_uuid } = action.payload;
+                if (state.roomChats[room_uuid]) {
+                    state.roomChats[room_uuid] = state.roomChats[room_uuid].filter(c => c.uuid !== chat_uuid);
+                    state.roomChatsTotalDocuments[room_uuid] = Math.max(0, (state.roomChatsTotalDocuments[room_uuid] || 1) - 1);
+                }
                 state.error = null;
             })
             .addCase(deleteRoomChat.rejected, (state, action) => {

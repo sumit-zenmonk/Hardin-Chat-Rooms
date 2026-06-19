@@ -79,8 +79,8 @@ export const getRoomChats = createAsyncThunk<
 );
 
 export const deleteRoomChat = createAsyncThunk<
-    { message: string; chat_uuid: string, user_uuid: string },
-    { chat_uuid: string },
+    { message: string, room_uuid: string, chat_uuid: string, user_uuid: string },
+    { chat_uuid: string, room_uuid: string },
     { state: RootState }
 >("delete/room/chat", async (payload, { getState, rejectWithValue }) => {
     try {
@@ -100,7 +100,7 @@ export const deleteRoomChat = createAsyncThunk<
             throw new Error(result.message);
         }
 
-        return { message: result.message, chat_uuid: payload.chat_uuid, user_uuid: user_uuid };
+        return { message: result.message, room_uuid: payload.room_uuid, chat_uuid: payload.chat_uuid, user_uuid: user_uuid };
     } catch (err: any) {
         return rejectWithValue(err.message);
     }

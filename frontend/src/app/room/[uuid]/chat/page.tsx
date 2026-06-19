@@ -106,9 +106,9 @@ export default function SpecificRoomChat() {
     }
   };
 
-  const handleDeleteChat = async (chat_uuid: string) => {
+  const handleDeleteChat = async (chat_uuid: string, room_uuid: string) => {
     try {
-      await dispatch(deleteRoomChat({ chat_uuid })).unwrap();
+      await dispatch(deleteRoomChat({ chat_uuid, room_uuid })).unwrap();
       enqueueSnackbar("Message deleted", { variant: "success" });
     } catch (error: any) {
       enqueueSnackbar(error, { variant: "error" });
@@ -163,7 +163,7 @@ export default function SpecificRoomChat() {
                         {new Date(chat.created_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                       </Typography>
                       {chat.member?.user_uuid === user?.uuid && (
-                        <IconButton size="small" onClick={() => handleDeleteChat(chat.uuid)} className={styles.deleteBtn}>
+                        <IconButton size="small" onClick={() => handleDeleteChat(chat.uuid, chat.room_uuid)} className={styles.deleteBtn}>
                           <DeleteIcon fontSize="inherit" />
                         </IconButton>
                       )}
