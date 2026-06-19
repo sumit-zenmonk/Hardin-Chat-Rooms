@@ -4,3 +4,12 @@
     background-size: auto;
     background-position: center;
 }
+
+.avatar {
+    width: 50%;
+    height: 50%;
+    background-size: auto;
+    background-position: center;
+    position: absolute;
+    top: 30;
+}

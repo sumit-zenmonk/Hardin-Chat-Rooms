@@ -43,7 +43,7 @@ async function create() {
                 email: user.email,// faker.internet.email(),
                 // password: hashedPassword,
                 name: user.name,// faker.person.fullName(),
-                image_url: faker.image.personPortrait() || "https://i.pravatar.cc/300",
+                profile_image: faker.image.personPortrait() || "https://i.pravatar.cc/300",
             });
 
             console.log(created_user);

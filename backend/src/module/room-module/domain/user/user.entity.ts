@@ -14,7 +14,10 @@ export class UserEntity {
     email: string;
 
     @Column({ type: "varchar", nullable: true })
-    image_url: string;
+    profile_image: string;
+
+    @Column({ type: "boolean", default: false })
+    is_online: boolean;
 
     @OneToMany(() => RoomMemberEntity, (member) => member.user)
     member: RoomMemberEntity[];

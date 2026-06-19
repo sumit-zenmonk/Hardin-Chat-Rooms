@@ -11,6 +11,7 @@ import { Server, Socket } from 'socket.io';
 import { Injectable } from '@nestjs/common';
 import { JwtHelperService } from 'src/module/user-module/infrastructure/services/jwt.service';
 import { UserRepository } from 'src/module/user-module/infrastructure/repository/user.repository';
+import * as RoomUserRepository from 'src/module/room-module/infrastructure/repository/user.repository';
 import { SocketEventSubscribeEnum } from './socket.enum';
 
 @Injectable()
@@ -33,6 +34,7 @@ export class SocketService implements OnGatewayConnection, OnGatewayDisconnect {
     constructor(
         private readonly jwtHelperService: JwtHelperService,
         private readonly userRepository: UserRepository,
+        private readonly userRoomRepository: RoomUserRepository.UserRepository,
     ) { }
 
     async handleConnection(client: Socket) {
@@ -53,7 +55,7 @@ export class SocketService implements OnGatewayConnection, OnGatewayDisconnect {
 
             this.activeUsers.set(decoded.uuid, client.id);
             console.log(`User connected: ${decoded.uuid}`);
-            await this.userRepository.updateOnlineStatus(decoded.uuid, true);
+            await this.userRoomRepository.updateOnlineStatus(decoded.uuid, true);
         } catch (e) {
             client.disconnect();
         }
@@ -64,7 +66,7 @@ export class SocketService implements OnGatewayConnection, OnGatewayDisconnect {
             if (socketId === client.id) {
                 this.activeUsers.delete(uuid);
                 console.log(`User disconnected: ${uuid}`);
-                await this.userRepository.updateOnlineStatus(uuid, false);
+                await this.userRoomRepository.updateOnlineStatus(uuid, false);
                 break;
             }
         }

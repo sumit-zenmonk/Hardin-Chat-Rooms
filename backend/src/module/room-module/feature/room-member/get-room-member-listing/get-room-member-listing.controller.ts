@@ -16,7 +16,7 @@ export class GetRoomMemberListingController {
             limit: curr_limit,
             offset: curr_offset,
             totalDocuments: totalDocuments,
-            message: "Room Listing Success"
+            message: "Room Member Listing Success"
         }
     }
 }

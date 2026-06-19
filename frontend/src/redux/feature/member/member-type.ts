@@ -14,6 +14,8 @@ export interface User {
     uuid: string;
     name: string;
     email: string;
+    is_online: boolean;
+    profile_image: string;
     created_at: string;
     updated_at: string;
     deleted_at: string | null;

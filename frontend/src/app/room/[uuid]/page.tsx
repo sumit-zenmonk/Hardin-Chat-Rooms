@@ -95,7 +95,7 @@ export default function SpecificRoom() {
                   elevation={2}
                 >
                   <Box className={bannerStyles.banner} style={{ backgroundImage: randomImageUrl() }} />
-                  <Avatar src={(member.user_uuid === user?.uuid && user?.profile_image) ? user.profile_image : undefined}>
+                  <Avatar src={member.user.profile_image ? member.user.profile_image : undefined} className={bannerStyles.avatar} >
                     {member.user.name ? member.user.name.charAt(0).toUpperCase() : '?'}
                   </Avatar>
 

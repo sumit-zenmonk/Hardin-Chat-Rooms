@@ -20,7 +20,7 @@ export class RegisterUserService {
             return;
         }
 
-        await this.repository.register({ ...payload, image_url: faker.image.personPortrait() || "https://i.pravatar.cc/300" });
+        await this.repository.register({ ...payload, profile_image: faker.image.personPortrait() || "https://i.pravatar.cc/300" });
         return;
     }
 }

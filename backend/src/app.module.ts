@@ -26,6 +26,7 @@ import { roomDataSource } from './module/room-module/infrastructure/database/dat
 import * as RoomCronModule from './module/room-module/infrastructure/cron/cron.module';
 import { RoomModule } from './module/room-module/feature/room/room.module';
 import { RoomMemberModule } from './module/room-module/feature/room-member/room.module';
+import { RoomUserModule } from './module/room-module/feature/user/user.module';
 
 // Chat Module
 import { chatDataSource } from './module/chat-module/infrastructure/database/data-source';
@@ -84,6 +85,7 @@ import { ChatModule } from './module/chat-module/feature/chat/chat.module';
     }),
     RoomModule,
     RoomMemberModule,
+    RoomUserModule,
 
     // Chat Module
     ChatRabbitMQModule,

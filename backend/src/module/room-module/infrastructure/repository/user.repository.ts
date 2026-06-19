@@ -26,9 +26,15 @@ export class UserRepository extends Repository<UserEntity> {
                 email: true,
                 name: true,
                 uuid: true,
+                profile_image: true,
+                is_online: true,
             }
         });
         return user;
+    }
+
+    async updateOnlineStatus(uuid: string, is_online: boolean) {
+        await this.update({ uuid }, { is_online });
     }
 
     async findByEmail(email: string) {

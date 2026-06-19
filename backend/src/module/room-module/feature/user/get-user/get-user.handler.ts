@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from "@nestjs/common";
 import type { Request } from "express";
-import { UserRepository } from "src/module/user-module/infrastructure/repository/user.repository";
+import { UserRepository } from "src/module/room-module/infrastructure/repository/user.repository";
 
 @Injectable()
 export class GetUserService {

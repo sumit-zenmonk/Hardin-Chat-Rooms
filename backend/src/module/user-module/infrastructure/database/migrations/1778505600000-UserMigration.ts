@@ -12,8 +12,6 @@ export class userMigration1778505600000 implements MigrationInterface {
                     { name: "name", type: "varchar", isNullable: false, },
                     { name: "email", type: "varchar", isUnique: true, isNullable: false, },
                     { name: "password", type: "varchar", isNullable: false, },
-                    { name: "profile_image", type: "varchar", isNullable: true, },
-                    { name: "is_online", type: "boolean", default: false, },
                     { name: "created_at", type: "timestamp", default: "now()", },
                     { name: "updated_at", type: "timestamp", default: "now()", },
                     { name: "deleted_at", type: "timestamp", isNullable: true, },
